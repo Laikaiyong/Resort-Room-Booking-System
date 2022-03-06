@@ -4,6 +4,8 @@
  */
 package views;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USER
@@ -28,15 +30,15 @@ public class CheckIns extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        CheckoutMenu = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        RoomsMenu = new javax.swing.JLabel();
+        CheckinMenu = new javax.swing.JLabel();
+        BookingMenu = new javax.swing.JLabel();
+        logouButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,8 +47,13 @@ public class CheckIns extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/systemLogoIconMenu.png"))); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
-        jLabel5.setText("Check-out");
+        CheckoutMenu.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        CheckoutMenu.setText("Check-out");
+        CheckoutMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CheckoutMenuMouseClicked(evt);
+            }
+        });
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/room.png"))); // NOI18N
@@ -60,22 +67,32 @@ public class CheckIns extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/newBooking.png"))); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
-        jLabel6.setText("Room");
+        RoomsMenu.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        RoomsMenu.setText("Room");
+        RoomsMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RoomsMenuMouseClicked(evt);
+            }
+        });
 
-        jLabel8.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
-        jLabel8.setText("Check-in");
+        CheckinMenu.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        CheckinMenu.setText("Check-in");
 
-        jLabel13.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
-        jLabel13.setText("Booking");
+        BookingMenu.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        BookingMenu.setText("Booking");
+        BookingMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BookingMenuMouseClicked(evt);
+            }
+        });
 
-        jButton1.setBackground(new java.awt.Color(255, 102, 102));
-        jButton1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(240, 240, 240));
-        jButton1.setText("Logout");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        logouButton.setBackground(new java.awt.Color(255, 102, 102));
+        logouButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        logouButton.setForeground(new java.awt.Color(240, 240, 240));
+        logouButton.setText("Logout");
+        logouButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                logouButtonActionPerformed(evt);
             }
         });
 
@@ -89,21 +106,21 @@ public class CheckIns extends javax.swing.JFrame {
                 .addGap(88, 88, 88)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                .addComponent(RoomsMenu)
                 .addGap(124, 124, 124)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addComponent(CheckinMenu)
                 .addGap(134, 134, 134)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
+                .addComponent(CheckoutMenu)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
+                .addComponent(BookingMenu)
                 .addGap(110, 110, 110)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logouButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
         );
         jPanel1Layout.setVerticalGroup(
@@ -116,20 +133,20 @@ public class CheckIns extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(BookingMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(logouButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel11)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CheckoutMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel10)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CheckinMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel9)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(RoomsMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -142,17 +159,41 @@ public class CheckIns extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(123, 123, 123)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(514, Short.MAX_VALUE))
+                .addGap(0, 637, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void CheckoutMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckoutMenuMouseClicked
+        dispose();
+        new CheckOuts().run();
+    }//GEN-LAST:event_CheckoutMenuMouseClicked
+
+    private void RoomsMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RoomsMenuMouseClicked
+        dispose();
+        new Rooms().run();
+    }//GEN-LAST:event_RoomsMenuMouseClicked
+
+    private void logouButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logouButtonActionPerformed
+        int reply = JOptionPane.showConfirmDialog(
+                null, 
+                "Are you sure you want to logout?", 
+                "Logout Confirmation", 
+                JOptionPane.YES_NO_OPTION
+        );
+        if (reply == JOptionPane.YES_OPTION)
+        {
+            dispose();
+            new Login().setVisible(true);
+        }
+    }//GEN-LAST:event_logouButtonActionPerformed
+
+    private void BookingMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BookingMenuMouseClicked
+        dispose();
+        new Bookings().run();
+    }//GEN-LAST:event_BookingMenuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -190,16 +231,21 @@ public class CheckIns extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel BookingMenu;
+    private javax.swing.JLabel CheckinMenu;
+    private javax.swing.JLabel CheckoutMenu;
+    private javax.swing.JLabel RoomsMenu;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton logouButton;
     // End of variables declaration//GEN-END:variables
+
+    public void run()
+    {
+        new CheckIns().setVisible(true);
+    }
 }

@@ -2,9 +2,16 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Currency;
+
+import javax.swing.JOptionPane;
+
+import java.util.*;
 
 import controllers.CalculateDays;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
 
 public class Booking {
     /**
@@ -16,10 +23,23 @@ public class Booking {
     private char gender;
     private String customerEmail;
     private String roomId;
+    private String status;
     private int stayDays;
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDateTime createdAt;
+    
+    private static final File bookFile = new File("src/database/records.txt");
+    private static int totalRecord = (int) lineTotal(bookFile);
+    
+    private List<String> validStatus = new ArrayList<String>(
+            Arrays.asList(
+                    "Booked",
+                    "Cancelled",
+                    "CheckIn",
+                    "CheckOut"
+            )
+    );
 
     protected final float chargePerNight = 350f;
     protected final Currency malaysiaRM = Currency.getInstance("MYS");
@@ -34,16 +54,19 @@ public class Booking {
             String id,
             char newGender,
             String email,
-            String roomId,
+            String room,
             LocalDate newStartDate,
             LocalDate newEndDate,
             LocalDateTime newCreatedAt
         )
     {
+        bookingId = totalRecord + 1;
         customerName = name;
         personalId = id;
         gender = newGender;
         customerEmail = email;
+        roomId = room;
+        status = "Booked";
         stayDays = calculator.dateDifference(startDate, endDate);
         startDate = newStartDate;
         endDate = newEndDate;
@@ -81,6 +104,23 @@ public class Booking {
     public void setRoom(String roomId)
     {
         this.roomId = roomId;
+    }
+    
+    public void setStatus(String status)
+    {
+        boolean validateStatus = validStatus.contains(status);
+        if (validateStatus)
+        {
+            this.status = status;
+        }
+        else
+        {
+            System.out.println("Invalid status");
+            JOptionPane.showMessageDialog(null, 
+                                        "Invalid Booking Status",
+                                        "Update Unsuccessful",
+                                        JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void setStartDate(LocalDate start)
@@ -127,6 +167,11 @@ public class Booking {
     {
         return this.roomId;
     }
+    
+    public String getStatus()
+    {
+        return this.status;
+    }
 
     public int getStayDays()
     {
@@ -146,5 +191,28 @@ public class Booking {
     public LocalDateTime getCreatedTime()
     {
         return this.createdAt;
+    }
+    
+    public static long lineTotal(File file)
+    {
+        long lines = 0;
+        try (LineNumberReader lnr = new LineNumberReader(new FileReader(file)))
+        {
+            while (lnr.readLine() != null)
+            {
+                lines = lnr.getLineNumber();   
+            }
+        } 
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return lines;
+    }
+    
+    public String toString()
+    {
+        return "Booking " + bookingId + " on " + createdAt;
     }
 }

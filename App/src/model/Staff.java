@@ -33,7 +33,8 @@ public class Staff {
             // Encrypt password
             cipher.init(Cipher.ENCRYPT_MODE, aesKey);
             byte[] encrypted = cipher.doFinal(password.getBytes());
-            for (byte b: encrypted) {
+            for (byte b: encrypted)
+            {
                 encryptedPassword.append((char)b);
             }
             encryptedPass = encryptedPassword.toString();

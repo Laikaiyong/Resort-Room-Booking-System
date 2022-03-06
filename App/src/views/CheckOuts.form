@@ -52,21 +52,21 @@
                   <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                   <Component id="jLabel9" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                  <Component id="RoomsMenu" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
                   <Component id="jLabel10" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                  <Component id="CheckinMenu" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
                   <Component id="jLabel11" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                  <Component id="CheckoutMenu" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="153" max="32767" attributes="0"/>
                   <Component id="jLabel12" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                  <Component id="BookingMenu" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" pref="102" max="-2" attributes="0"/>
+                  <Component id="logouButton" min="-2" pref="102" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -81,24 +81,24 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel13" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="jButton1" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="BookingMenu" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="logouButton" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                          <Component id="jLabel5" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="CheckoutMenu" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="CheckinMenu" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                          <Component id="jLabel6" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="RoomsMenu" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -115,7 +115,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel5">
+        <Component class="javax.swing.JLabel" name="CheckoutMenu">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="16" style="1"/>
@@ -155,31 +155,40 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
+        <Component class="javax.swing.JLabel" name="RoomsMenu">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="16" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Room"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="RoomsMenuMouseClicked"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel8">
+        <Component class="javax.swing.JLabel" name="CheckinMenu">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="16" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Check-in"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="CheckinMenuMouseClicked"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel13">
+        <Component class="javax.swing.JLabel" name="BookingMenu">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="16" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Booking"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BookingMenuMouseClicked"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="logouButton">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="ff" type="rgb"/>
@@ -193,7 +202,7 @@
             <Property name="text" type="java.lang.String" value="Logout"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logouButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

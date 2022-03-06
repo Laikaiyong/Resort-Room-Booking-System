@@ -1,5 +1,8 @@
 package model;
 
+import java.util.*;
+import javax.swing.JOptionPane;
+
 public class Room {
     /**
      * Attributes
@@ -10,7 +13,28 @@ public class Room {
     private boolean maintenance;
     private int paxForBed;
     
-    public Room(){ }
+    private List<String> validStatus = new ArrayList<String>(
+            Arrays.asList(
+                    "Cleaning",
+                    "Available",
+                    "Occupied"
+            )
+    );
+    
+    public Room(
+            String newView,
+            String newRoomNo,
+            String newStatus,
+            boolean maintenanceStatus,
+            int newPax
+        )
+    {
+        view = newView;
+        roomNumber = newRoomNo;
+        status = newStatus;
+        maintenance = maintenanceStatus;
+        paxForBed = newPax;
+    }
     
     /**
      * Setters
@@ -27,7 +51,19 @@ public class Room {
 
     public void setStatus(String status)
     {
-        this.status = status;
+        boolean validateStatus = validStatus.contains(status);
+        if (validateStatus)
+        {
+            this.status = status;
+        }
+        else
+        {
+            System.out.println("Invalid room status");
+            JOptionPane.showMessageDialog(null, 
+                                        "Invalid Room Status",
+                                        "Update Unsuccessful",
+                                        JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void setMaintenance(boolean maintenance)

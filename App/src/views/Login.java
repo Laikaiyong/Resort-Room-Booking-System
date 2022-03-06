@@ -172,7 +172,7 @@ public class Login extends javax.swing.JFrame {
                                               JOptionPane.INFORMATION_MESSAGE, 
                                               successIcon);
                 setVisible(false);
-                new Rooms().setVisible(true);
+                new Rooms().run();
             }
             else
             {
