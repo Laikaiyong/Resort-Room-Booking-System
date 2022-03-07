@@ -17,16 +17,16 @@ import model.Room;
  * @author USER
  */
 public class RoomsConfig {
-    public static void main(String[] args)
-    {
-        RoomsConfig initializer = new RoomsConfig();
-    }
-    
     public ArrayList<Room> rooms = configRooms();
     
     private static String[] VIEWS = {"Jungle", "River"};
     private static int MAX_ROOM = 20;
     private static int MAX_EACH = 10;
+    
+    public static void main(String[] args)
+    {
+        RoomsConfig initializer = new RoomsConfig();
+    }
     
     private ArrayList<Room> configRooms()
     {

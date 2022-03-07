@@ -55,6 +55,7 @@ public class Booking {
             char newGender,
             String email,
             String room,
+            String newStatus,
             LocalDate newStartDate,
             LocalDate newEndDate,
             LocalDateTime newCreatedAt
@@ -66,7 +67,7 @@ public class Booking {
         gender = newGender;
         customerEmail = email;
         roomId = room;
-        status = "Booked";
+        status = newStatus;
         stayDays = calculator.dateDifference(startDate, endDate);
         startDate = newStartDate;
         endDate = newEndDate;

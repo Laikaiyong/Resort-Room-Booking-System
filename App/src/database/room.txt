@@ -1,4 +1,4 @@
-Jungle, J01, Available, false, 2
+Jungle, J01, Occupied, true, 9
 Jungle, J02, Available, false, 2
 Jungle, J03, Available, false, 2
 Jungle, J04, Available, false, 2

@@ -640,29 +640,49 @@ public class Rooms extends javax.swing.JFrame {
         String newStatus = (String) roomStatus.getModel().getSelectedItem();
         System.out.println(newStatus);
         boolean newMaintenance = yesRadioButton.isSelected() ? true : false;
-        int newPax = Integer.parseInt(roomPax.getText());
-        
-        
-        if (oldStatus.equals(newStatus) 
-            && oldMaintenance == newMaintenance
-            && oldPax == newPax)
+        int newPax = 0;
+        boolean proceedable = true;
+        try
         {
-            System.out.println("Nothing change");
+            newPax = Integer.parseInt(roomPax.getText());
         }
-        else
+        catch(Exception e)
         {
-            rooms.get(recordNumber).setStatus(newStatus);
-            rooms.get(recordNumber).setMaintenance(newMaintenance);
-            rooms.get(recordNumber).setPax(newPax);
-            new RoomsUpdate().updateRoomDatabase(rooms);
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null, 
+                "Pax is not valid number",
+                "Error Update", 
+                JOptionPane.ERROR_MESSAGE
+            );
+            proceedable = false;
             setVisible(false);
             setVisible(true);
-            ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
-            JOptionPane.showMessageDialog(null, 
-                                          "Updated", 
-                                          "Success", 
-                                          JOptionPane.INFORMATION_MESSAGE, 
-                                          successIcon);
+        }
+        
+        if (proceedable)
+        {
+            if (oldStatus.equals(newStatus) 
+                && oldMaintenance == newMaintenance
+                && oldPax == newPax)
+            {
+                System.out.println("Nothing change");
+            }
+            else
+            {
+                rooms.get(recordNumber).setStatus(newStatus);
+                rooms.get(recordNumber).setMaintenance(newMaintenance);
+                rooms.get(recordNumber).setPax(newPax);
+                new RoomsUpdate().updateRoomDatabase(rooms);
+                setVisible(false);
+                setVisible(true);
+                ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
+                JOptionPane.showMessageDialog(null, 
+                                              "Updated", 
+                                              "Success", 
+                                              JOptionPane.INFORMATION_MESSAGE, 
+                                              successIcon);
+            }
         }
     }
     
