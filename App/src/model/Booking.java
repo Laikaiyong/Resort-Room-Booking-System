@@ -27,10 +27,15 @@ public class Booking {
     private int stayDays;
     private LocalDate startDate;
     private LocalDate endDate;
-    private LocalDateTime createdAt;
+    private String createdAt;
+    private float pricePerNight;
+    private float nightPay;
+    private float tax;
+    private float finalPayment;
+    private boolean addedCharges;
+    private float addAmount;
     
     private static final File bookFile = new File("src/database/records.txt");
-    private static int totalRecord = (int) lineTotal(bookFile);
     
     private List<String> validStatus = new ArrayList<String>(
             Arrays.asList(
@@ -41,15 +46,13 @@ public class Booking {
             )
     );
 
-    protected final float chargePerNight = 350f;
-    protected final Currency malaysiaRM = Currency.getInstance("MYS");
-
-    CalculateDays calculator = new CalculateDays();
+    private final CalculateDays calculator = new CalculateDays();
     
     /**
      * Constructor
      */
     public Booking(
+            int recordId,
             String name, 
             String id,
             char newGender,
@@ -58,20 +61,28 @@ public class Booking {
             String newStatus,
             LocalDate newStartDate,
             LocalDate newEndDate,
-            LocalDateTime newCreatedAt
+            String newCreatedAt,
+            float extraCharges,
+            boolean addedExtra
         )
     {
-        bookingId = totalRecord + 1;
+        bookingId = recordId;
         customerName = name;
         personalId = id;
         gender = newGender;
         customerEmail = email;
         roomId = room;
         status = newStatus;
-        stayDays = calculator.dateDifference(startDate, endDate);
+        stayDays = calculator.dateDifference(newStartDate, newEndDate);
         startDate = newStartDate;
         endDate = newEndDate;
         createdAt = newCreatedAt;
+        pricePerNight = 350f;
+        nightPay = pricePerNight * stayDays;
+        tax = nightPay * 0.08f;
+        addAmount = extraCharges;
+        finalPayment = nightPay + tax + addAmount;
+        addedCharges = addedExtra;
     }
     
     /**
@@ -135,6 +146,15 @@ public class Booking {
         this.endDate = end;
         this.stayDays = calculator.dateDifference(this.startDate, this.endDate);
     }
+    
+    public void setAddedCharges(float currency)
+    {
+        this.addedCharges = true;
+        this.addAmount = currency;
+        float temp = this.addAmount + this.nightPay;
+        this.tax = temp * 0.08f;
+        this.finalPayment = this.addAmount + this.nightPay + this.tax;
+    }
 
     /**
      * Getters
@@ -189,27 +209,34 @@ public class Booking {
         return this.endDate;
     }
 
-    public LocalDateTime getCreatedTime()
+    public String getCreatedTime()
     {
         return this.createdAt;
     }
     
-    public static long lineTotal(File file)
+    public float getNightPay()
     {
-        long lines = 0;
-        try (LineNumberReader lnr = new LineNumberReader(new FileReader(file)))
-        {
-            while (lnr.readLine() != null)
-            {
-                lines = lnr.getLineNumber();   
-            }
-        } 
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-        
-        return lines;
+        return this.nightPay;
+    }
+    
+    public float getTax()
+    {
+        return this.tax;
+    }
+    
+    public float getTotalPayment()
+    {
+        return this.finalPayment;
+    }
+    
+    public float getExtraCharges()
+    {
+        return this.addAmount;
+    }
+    
+    public boolean getAddedExtra()
+    {
+        return this.addedCharges;
     }
     
     public String toString()

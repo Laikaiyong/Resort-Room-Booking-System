@@ -5,7 +5,9 @@
 package config;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,14 +20,14 @@ import model.Booking;
  * @author USER
  */
 public class BookingsConfig {
-    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private static final DateTimeFormatter datetimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public ArrayList<Booking> bookings = configBooking();
+    public int totalRecord = (int) lineTotal(new File("src/database/records.txt"));
     private ArrayList<Booking> configBooking()
     {
         ArrayList<Booking> bookingsRecord = new ArrayList<>();
         
-        File file = new File("src/database/bookings.txt");
+        File file = new File("src/database/records.txt");
         // Create file / Retrive data from file
         try 
         {
@@ -43,6 +45,7 @@ public class BookingsConfig {
                     String line = input.nextLine();
                     String[] bookInformation = line.split(", ");
                     Booking newBooking = new Booking(
+                            Integer.parseInt(bookInformation[0]),
                             bookInformation[1],
                             bookInformation[2],
                             bookInformation[3].charAt(0),
@@ -51,7 +54,9 @@ public class BookingsConfig {
                             bookInformation[6],
                             LocalDate.parse(bookInformation[8], dateFormatter),
                             LocalDate.parse(bookInformation[9], dateFormatter),
-                            LocalDateTime.parse(bookInformation[10], datetimeFormatter)
+                            bookInformation[10],
+                            Float.parseFloat(bookInformation[12]),
+                            Boolean.parseBoolean(bookInformation[14])
                     );
                     bookingsRecord.add(newBooking);
                 }
@@ -64,5 +69,24 @@ public class BookingsConfig {
         }
         
         return bookingsRecord;
+    }
+    
+      
+    public long lineTotal(File file)
+    {
+        long lines = 0;
+        try (LineNumberReader lnr = new LineNumberReader(new FileReader(file)))
+        {
+            while (lnr.readLine() != null)
+            {
+                lines = lnr.getLineNumber();   
+            }
+        } 
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return lines;
     }
 }

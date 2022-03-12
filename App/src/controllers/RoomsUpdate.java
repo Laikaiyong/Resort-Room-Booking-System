@@ -22,7 +22,7 @@ public class RoomsUpdate {
         Path filePath = Path.of(file.getAbsolutePath());
         try
         {
-            System.out.println("Updating file");
+            System.out.println("Updating Room data");
             PrintWriter printWriter = new PrintWriter(new FileWriter(file, false));
             printWriter.flush();
             int item = 1;

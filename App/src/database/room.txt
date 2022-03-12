@@ -1,4 +1,4 @@
-Jungle, J01, Occupied, true, 9
+Jungle, J01, Available, false, 2
 Jungle, J02, Available, false, 2
 Jungle, J03, Available, false, 2
 Jungle, J04, Available, false, 2
@@ -13,7 +13,7 @@ River, R02, Available, false, 2
 River, R03, Available, false, 2
 River, R04, Available, false, 2
 River, R05, Available, false, 2
-River, R06, Available, false, 4
+River, R06, Occupied, false, 4
 River, R07, Available, false, 4
 River, R08, Available, false, 4
 River, R09, Available, false, 4
