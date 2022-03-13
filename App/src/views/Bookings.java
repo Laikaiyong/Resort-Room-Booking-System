@@ -990,59 +990,63 @@ public class Bookings extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentShown
 
     private void dateValidateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateValidateButtonActionPerformed
-        boolean proceedable = true;
-        Booking selectedRecord = bookings.get(recordNumber);
-        LocalDate newStartDate = LocalDate.now();
-        LocalDate newEndDate = LocalDate.now();
-        try
+        if(dateValidateButton.isEnabled())
         {
-            newStartDate = startDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            newEndDate = endDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(
-                null, 
-                "Value is not Date", 
-                "Error Selection", 
-                JOptionPane.ERROR_MESSAGE
-            );
-            proceedable = false;
-        }
-
-        if(proceedable)
-        {
-            if(newStartDate.isAfter(newEndDate) || newStartDate.isEqual(newEndDate) || newStartDate.isBefore(LocalDate.now()))
+            boolean proceedable = true;
+            Booking selectedRecord = bookings.get(recordNumber);
+            LocalDate newStartDate = LocalDate.now();
+            LocalDate newEndDate = LocalDate.now();
+            try
             {
+                newStartDate = startDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                newEndDate = endDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(
-                        null, 
-                        "Invalid Date or date is in the past", 
-                        "Error Date Query", 
-                        JOptionPane.ERROR_MESSAGE
+                    null, 
+                    "Value is not Date", 
+                    "Error Selection", 
+                    JOptionPane.ERROR_MESSAGE
                 );
-                proceedable=false;
+                proceedable = false;
             }
-            else
+
+            if(proceedable)
             {
-                updateComboBox(newStartDate, newEndDate);
-                
-                if(
-                        newStartDate.equals(selectedRecord.getStartDate())
-                        && newEndDate.equals(selectedRecord.getEndDate())
-                )
+                if(newStartDate.isAfter(newEndDate) || newStartDate.isEqual(newEndDate) || newStartDate.isBefore(LocalDate.now()))
                 {
-                    roomIdCombo.addItem(selectedRecord.getBookedRoom());
+                    JOptionPane.showMessageDialog(
+                            null, 
+                            "Invalid Date or date is in the past", 
+                            "Error Date Query", 
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    proceedable=false;
                 }
-                validDate = true;
-                ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
-                JOptionPane.showMessageDialog(null, 
-                                              "Available Room Updated, feel free to select a new room", 
-                                              "Success Date Query", 
-                                              JOptionPane.INFORMATION_MESSAGE, 
-                                              successIcon);
+                else
+                {
+                    updateComboBox(newStartDate, newEndDate);
+
+                    if(
+                            newStartDate.equals(selectedRecord.getStartDate())
+                            && newEndDate.equals(selectedRecord.getEndDate())
+                    )
+                    {
+                        roomIdCombo.addItem(selectedRecord.getBookedRoom());
+                    }
+                    days.setText(String.valueOf(calculator.dateDifference(newStartDate, newEndDate)));
+                    validDate = true;
+                    ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
+                    JOptionPane.showMessageDialog(null, 
+                                                  "Available Room Updated, feel free to select a new room", 
+                                                  "Success Date Query", 
+                                                  JOptionPane.INFORMATION_MESSAGE, 
+                                                  successIcon);
+                }
             }
-        }  
+        }
     }//GEN-LAST:event_dateValidateButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
@@ -1452,6 +1456,13 @@ public class Bookings extends javax.swing.JFrame {
             {
                 femaleButton.doClick();
             }
+            dateValidateButton.setEnabled(
+                    (
+                            bookings.get(recordNumber).getStatus().equals("Cancelled")
+                            ||
+                            bookings.get(recordNumber).getStatus().equals("CheckOut")
+                    ) ? false : true
+            );
             email.setText(bookings.get(recordNumber).getCustomerEmail());
             roomIdCombo.getModel().setSelectedItem(bookings.get(recordNumber).getBookedRoom());
             bookingStatus.setText(bookings.get(recordNumber).getStatus());

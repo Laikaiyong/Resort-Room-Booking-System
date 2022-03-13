@@ -916,7 +916,7 @@ public class CheckOuts extends javax.swing.JFrame {
                         )
                         {
                             record.setAddedCharges(extraChargesValue);
-                            totalPayment.setText(String.format("%.2f", new BigDecimal(record.getTotalPayment())));
+                            totalPayment.setText(String.format("RM %.2f", new BigDecimal(record.getTotalPayment())));
                         }
                     }
                     new BookingController().updateBookingDatabase(bookings);
@@ -996,10 +996,10 @@ public class CheckOuts extends javax.swing.JFrame {
                     bookingDays.setText(String.valueOf(record.getStayDays()));
                     startDate.setText(record.getStartDate().toString());
                     endDate.setText(record.getEndDate().toString());
-                    nightsPay.setText(String.format("%.2f", new BigDecimal(record.getNightPay())));
-                    taxesLabel.setText(String.format("%.2f", new BigDecimal(record.getTax())));
+                    nightsPay.setText(String.format("RM %.2f", new BigDecimal(record.getNightPay())));
+                    taxesLabel.setText(String.format("RM %.2f", new BigDecimal(record.getTax())));
                     extraCharges.setText(String.format("%.2f", new BigDecimal(record.getExtraCharges())));
-                    totalPayment.setText(String.format("%.2f", new BigDecimal(record.getTotalPayment())));
+                    totalPayment.setText(String.format("RM %.2f", new BigDecimal(record.getTotalPayment())));
                     extraCharges.setEditable(!record.getAddedExtra());
                     addChargesButton.setEnabled(!record.getAddedExtra());
                     break;
