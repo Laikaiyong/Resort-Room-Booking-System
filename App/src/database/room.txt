@@ -8,7 +8,7 @@ Jungle, J07, Available, false, 4
 Jungle, J08, Available, false, 4
 Jungle, J09, Available, false, 4
 Jungle, J10, Available, false, 4
-River, R01, Available, false, 2
+River, R01, Cleaning, false, 2
 River, R02, Available, false, 2
 River, R03, Available, false, 2
 River, R04, Available, false, 2
