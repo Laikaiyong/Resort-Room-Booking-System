@@ -1256,6 +1256,10 @@ public class Bookings extends javax.swing.JFrame {
                         ||
                         (newStartDate.isAfter(record.getEndDate())
                         && newEndDate.isAfter(record.getEndDate())))
+                        &&
+                        (record.getStatus().equals("Booked")
+                         ||
+                         record.getStatus().equals("CheckIn"))
                     )
                     {
                         for(Room room: rooms)
@@ -1533,6 +1537,10 @@ public class Bookings extends javax.swing.JFrame {
                 ||
                 (startingDate.isAfter(record.getEndDate())
                 && endingDate.isAfter(record.getEndDate())))
+                &&
+                (record.getStatus().equals("Booked")
+                 ||
+                 record.getStatus().equals("CheckIn"))
             )
             {
                 for(Room room: rooms)
