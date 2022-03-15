@@ -30,7 +30,8 @@ public class Booking {
     private String createdAt;
     private float pricePerNight;
     private float nightPay;
-    private float tax;
+    private float serviceTax;
+    private float tourismTax;
     private float finalPayment;
     private boolean addedCharges;
     private float addAmount;
@@ -79,9 +80,10 @@ public class Booking {
         createdAt = newCreatedAt;
         pricePerNight = 350f;
         nightPay = pricePerNight * stayDays;
-        tax = nightPay * 0.08f;
+        serviceTax = nightPay * 0.10f;
+        tourismTax = stayDays * 10f;
         addAmount = extraCharges;
-        finalPayment = nightPay + tax + addAmount;
+        finalPayment = nightPay + serviceTax + tourismTax + addAmount;
         addedCharges = addedExtra;
     }
     
@@ -152,8 +154,8 @@ public class Booking {
         this.addedCharges = true;
         this.addAmount = currency;
         float temp = this.addAmount + this.nightPay;
-        this.tax = temp * 0.08f;
-        this.finalPayment = this.addAmount + this.nightPay + this.tax;
+        this.serviceTax = temp * 0.10f;
+        this.finalPayment = this.addAmount + this.nightPay + this.serviceTax + this.tourismTax;
     }
 
     /**
@@ -221,7 +223,7 @@ public class Booking {
     
     public float getTax()
     {
-        return this.tax;
+        return this.serviceTax + this.tourismTax;
     }
     
     public float getTotalPayment()
