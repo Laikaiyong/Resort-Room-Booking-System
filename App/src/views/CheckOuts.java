@@ -7,6 +7,7 @@ package views;
 import config.BookingsConfig;
 import config.RoomsConfig;
 import controllers.BookingController;
+import controllers.CalculateDays;
 import controllers.RoomsUpdate;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
@@ -27,6 +28,8 @@ public class CheckOuts extends javax.swing.JFrame {
     private ArrayList<String> availableCheckout = new ArrayList<>();
     private ArrayList<Room> rooms = new RoomsConfig().rooms;
     private boolean confirmed = false;
+
+    private final CalculateDays calculator = new CalculateDays();
     /**
      * Creates new form CheckOuts
      */
@@ -617,11 +620,11 @@ public class CheckOuts extends javax.swing.JFrame {
                 if(record.getBookingId() == selectedRecord)
                 {
                     if(
-                            (record.getEndDate().isEqual(LocalDate.now())
+                            record.getEndDate().isEqual(LocalDate.now())
                             ||
-                            (record.getEndDate().compareTo(LocalDate.now()) >= -1
+                            (calculator.dateDifference(record.getEndDate(), LocalDate.now()) >= -1
                             &&
-                            record.getEndDate().compareTo(LocalDate.now()) <= 1))
+                            calculator.dateDifference(record.getEndDate(), LocalDate.now()) <= 1)
                     )
                     {
                         proceedable = true;

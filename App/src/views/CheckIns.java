@@ -7,6 +7,7 @@ package views;
 import config.BookingsConfig;
 import config.RoomsConfig;
 import controllers.BookingController;
+import controllers.CalculateDays;
 import controllers.RoomsUpdate;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class CheckIns extends javax.swing.JFrame {
     private ArrayList<String> availableCheckin = new ArrayList<>();
     private ArrayList<Room> rooms = new RoomsConfig().rooms;
     private boolean confirmed = false;
+    
+    private final CalculateDays calculator = new CalculateDays();
     /**
      * Creates new form CheckIns
      */
@@ -507,7 +510,7 @@ public class CheckIns extends javax.swing.JFrame {
     }//GEN-LAST:event_BookingMenuMouseClicked
 
     private void checkInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInButtonActionPerformed
-        boolean proceedable = true;
+        boolean proceedable = false;
         if(confirmed)
         {
             int selectedRecord = Integer.parseInt(String.valueOf(availableCheckinBooking.getSelectedItem()));
@@ -518,9 +521,9 @@ public class CheckIns extends javax.swing.JFrame {
                     if(
                             record.getStartDate().isEqual(LocalDate.now())
                             ||
-                            (record.getStartDate().compareTo(LocalDate.now()) >= -2
+                            (calculator.dateDifference(record.getStartDate(), LocalDate.now()) >= -2
                             &&
-                            record.getStartDate().compareTo(LocalDate.now()) <= 2)
+                            calculator.dateDifference(record.getStartDate(), LocalDate.now()) <= 2)
                     )
                     {
                         proceedable = true;
