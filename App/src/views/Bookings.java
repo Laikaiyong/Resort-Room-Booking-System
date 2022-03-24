@@ -638,6 +638,11 @@ public class Bookings extends javax.swing.JFrame {
             }
         });
         bookingTable.getTableHeader().setReorderingAllowed(false);
+        bookingTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bookingTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(bookingTable);
 
         jTabbedPane1.addTab("Overview", jScrollPane1);
@@ -1120,10 +1125,10 @@ public class Bookings extends javax.swing.JFrame {
             {
                 if(record.getBookingId() == selectedBooking)
                 {
-                    record.setCustomerName(customerName.getText());
-                    record.setICPassport(personalId.getText());
+                    record.setCustomerName(customerName.getText().trim());
+                    record.setICPassport(personalId.getText().trim());
                     record.setGender(newGender);
-                    record.setEmail(email.getText());
+                    record.setEmail(email.getText().trim());
                     record.setRoom(roomIdCombo.getModel().getSelectedItem().toString());
                     record.setStartDate(startDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                     record.setEndDate(endDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
@@ -1303,6 +1308,34 @@ public class Bookings extends javax.swing.JFrame {
         validNewDate = false;
     }//GEN-LAST:event_requestEndDatePropertyChange
 
+    private void bookingTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingTableMouseClicked
+        try
+        {
+            int selectedRow = bookingTable.getSelectedRow();
+            if (selectedRow >= 0)
+            {
+                int selectedBookingId = Integer.parseInt(
+                        String.valueOf(
+                                bookingTable.getModel().getValueAt(selectedRow, 0)
+                        )
+                );
+                for(Booking record: bookings)
+                {
+                    if(record.getBookingId() == selectedBookingId)
+                    {
+                        recordNumber = selectedBookingId - 1;
+                        manipulateForm(recordNumber);
+                        break;
+                    }
+                }
+            }
+        }
+        catch(Exception excep)
+        {
+            excep.printStackTrace();
+        }
+    }//GEN-LAST:event_bookingTableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1354,14 +1387,14 @@ public class Bookings extends javax.swing.JFrame {
         
         try
         {
-            newId = Integer.parseInt(requestBookingID.getText());
+            newId = Integer.parseInt(requestBookingID.getText().trim());
             newStartDate = requestStartDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             newEndDate = requestEndDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             newRoomId = String.valueOf(requestAvailableRoomCombo.getModel().getSelectedItem());
-            newCusName = requestCustomerName.getText();
-            newPersonalId = requestPersonalID.getText();
+            newCusName = requestCustomerName.getText().trim();
+            newPersonalId = requestPersonalID.getText().trim();
             newGender = (requestMaleButton.isSelected()) ? 'M' : 'F';
-            newCusEmail = requestCustomerEmail.getText();
+            newCusEmail = requestCustomerEmail.getText().trim();
         }
         catch(Exception e)
         {
@@ -1445,7 +1478,7 @@ public class Bookings extends javax.swing.JFrame {
         if (bookings.size() != 0)
         {
             bookingId.setText(String.valueOf(bookings.get(recordNumber).getBookingId()));
-            createdDate.setText(bookings.get(recordNumber).getCreatedTime().toString());
+            createdDate.setText(bookings.get(recordNumber).getCreatedTime());
             customerName.setText(bookings.get(recordNumber).getCustomerName());
             personalId.setText(bookings.get(recordNumber).getPersonalId());
             if (bookings.get(recordNumber).getGender() == 'M')
