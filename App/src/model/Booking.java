@@ -241,6 +241,7 @@ public class Booking {
         return this.addedCharges;
     }
     
+    @Override
     public String toString()
     {
         return "Booking " + bookingId + " on " + createdAt;

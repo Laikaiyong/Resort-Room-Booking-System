@@ -246,6 +246,11 @@ public class Rooms extends javax.swing.JFrame {
             }
         });
         roomsTable.getTableHeader().setReorderingAllowed(false);
+        roomsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                roomsTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(roomsTable);
 
         jLabel4.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
@@ -598,6 +603,32 @@ public class Rooms extends javax.swing.JFrame {
             searchRoom();
         }
     }//GEN-LAST:event_searchFieldKeyPressed
+
+    private void roomsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roomsTableMouseClicked
+        try
+        {
+            int selectedRow = roomsTable.getSelectedRow();
+            if (selectedRow >= 0)
+            {
+                String selectedRoomId = String.valueOf(
+                     roomsTable.getModel().getValueAt(selectedRow, 0)
+                 );
+                for(Room record: rooms)
+                {
+                    if(record.getRoomNumber().equals(selectedRoomId))
+                    {
+                        recordNumber = selectedRow;
+                        manipulateForm(recordNumber);
+                        break;
+                    }
+                }
+            }
+        }
+        catch(Exception excep)
+        {
+            excep.printStackTrace();
+        }
+    }//GEN-LAST:event_roomsTableMouseClicked
 
     private void manipulateForm(int Index)
     {

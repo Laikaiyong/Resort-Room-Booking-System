@@ -104,19 +104,7 @@ public class Room {
         return this.paxForBed;
     }
     
-    /**
-     * Room methods
-     */
-    public void checkIn()
-    {
-        this.status = "Checkin";
-    }
-    
-    public void checkOut()
-    {
-        this.status = "Available";
-    }
-    
+    @Override
     public String toString()
     {
         return "Room Number " + roomNumber + " (" + view + ")";
