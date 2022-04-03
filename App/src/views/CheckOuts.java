@@ -90,6 +90,8 @@ public class CheckOuts extends javax.swing.JFrame {
         startDate = new javax.swing.JLabel();
         endDate = new javax.swing.JLabel();
         addChargesButton = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        contactNumber = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         availableCheckoutBooking = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -215,14 +217,14 @@ public class CheckOuts extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Customer Name", "IC / Passport", "Gender", "Email", "Room ID", "Status", "Days", "Start Date", "End Date", "Created At"
+                "ID", "Customer Name", "IC / Passport", "Gender", "Email", "Contact Number", "Room ID", "Status", "Days", "Start Date", "End Date", "Created At"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Byte.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Byte.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -354,6 +356,12 @@ public class CheckOuts extends javax.swing.JFrame {
             }
         });
 
+        jLabel21.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel21.setText("Ph No.:");
+
+        contactNumber.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        contactNumber.setText("-");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -409,7 +417,11 @@ public class CheckOuts extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(contactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel23)
@@ -437,7 +449,7 @@ public class CheckOuts extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel19)
                             .addComponent(createdAt))
@@ -457,7 +469,11 @@ public class CheckOuts extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(customerEmail))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(contactNumber))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
                             .addComponent(bookedRoomId))
@@ -737,6 +753,7 @@ public class CheckOuts extends javax.swing.JFrame {
                                 record.getCustomer().getPersonalId(),
                                 record.getCustomer().getGender(),
                                 record.getCustomer().getEmail(),
+                                record.getCustomer().getContactNumber(),
                                 record.getBookedRoom(),
                                 record.getStatus(),
                                 record.getStayDays(),
@@ -842,6 +859,7 @@ public class CheckOuts extends javax.swing.JFrame {
     private javax.swing.JLabel bookingStatus;
     private javax.swing.JTable bookingTable;
     private javax.swing.JButton checkoutButton;
+    private javax.swing.JLabel contactNumber;
     private javax.swing.JLabel createdAt;
     private javax.swing.JLabel customerEmail;
     private javax.swing.JLabel customerName;
@@ -861,6 +879,7 @@ public class CheckOuts extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -933,6 +952,7 @@ public class CheckOuts extends javax.swing.JFrame {
         }
     }
     
+    // Update combobox with checkoutable booking Id
     private void updateComboBox()
     {
         availableCheckoutBooking.removeAllItems();
@@ -955,6 +975,7 @@ public class CheckOuts extends javax.swing.JFrame {
         }
     }
     
+    // Update form with related info
     private void manipulateForm(String recordId)
     {
         if(recordId.equals("None"))
@@ -964,6 +985,7 @@ public class CheckOuts extends javax.swing.JFrame {
             personalId.setText("-");
             gender.setText("-");
             customerEmail.setText("-");
+            contactNumber.setText("-");
             bookedRoomId.setText("-");
             bookingStatus.setText("-");
             bookingDays.setText("-");
@@ -987,6 +1009,7 @@ public class CheckOuts extends javax.swing.JFrame {
                     personalId.setText(record.getCustomer().getPersonalId());
                     gender.setText(Character.toString(record.getCustomer().getGender()));
                     customerEmail.setText(record.getCustomer().getEmail());
+                    contactNumber.setText(record.getCustomer().getContactNumber());
                     bookedRoomId.setText(record.getBookedRoom());
                     bookingStatus.setText(record.getStatus());
                     bookingDays.setText(String.valueOf(record.getStayDays()));

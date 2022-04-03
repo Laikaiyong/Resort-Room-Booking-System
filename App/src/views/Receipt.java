@@ -53,7 +53,8 @@ public class Receipt extends javax.swing.JFrame {
         receiptArea.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         receiptArea.setLineWrap(true);
         receiptArea.setRows(5);
-        receiptArea.setText("                                                                Receipt");
+        receiptArea.setText("Receipt");
+        receiptArea.setToolTipText("");
         receiptArea.setWrapStyleWord(true);
         receiptArea.setFocusable(false);
 

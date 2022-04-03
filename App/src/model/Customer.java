@@ -1,22 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author USER
- */
 public class Customer
 {
+    /**
+     * Attributes
+     */
     private String name;
     private String personalId;
     private char gender;
     private String email;
+    private String contactNumber;
     
-    /*
-    * Constructors
+    /**
+    * Constructor
+    * For new Booking Request
     */
     public Customer()
     {
@@ -24,19 +21,30 @@ public class Customer
         personalId = "";
         gender = '-';
         email = "";
+        contactNumber = "";
     }
 
+    /**
+    * Constructor
+    * For existing Booking Request from Data Reading
+     * @param newName
+     * @param newPersonalId
+     * @param newGender
+     * @param newEmail
+    */
     public Customer(
             String newName, 
             String newPersonalId, 
             char newGender, 
-            String newEmail
+            String newEmail,
+            String newContactNumber
     )
     {
         this.name = newName;
         this.personalId = newPersonalId;
         this.gender = newGender;
         this.email = newEmail;
+        this.contactNumber = newContactNumber;
     }
     
     /*
@@ -62,6 +70,11 @@ public class Customer
         this.email = customerEmail;
     }
     
+    public void setContactNumber(String phoneNumber)
+    {
+        this.contactNumber = phoneNumber;
+    }
+    
     /*
     * Getters
     */
@@ -83,6 +96,11 @@ public class Customer
     public String getEmail()
     {
         return this.email;
+    }
+        
+    public String getContactNumber()
+    {
+        return this.contactNumber;
     }
     
     // Display message when printed

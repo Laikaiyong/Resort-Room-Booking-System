@@ -77,6 +77,8 @@ public class CheckIns extends javax.swing.JFrame {
         bookingDays = new javax.swing.JLabel();
         startDate = new javax.swing.JLabel();
         endDate = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        contactNumber = new javax.swing.JLabel();
         selectButton = new javax.swing.JButton();
         availableCheckinBooking = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -202,14 +204,14 @@ public class CheckIns extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Customer Name", "IC / Passport", "Gender", "Email", "Room ID", "Status", "Days", "Start Date", "End Date", "Created At"
+                "ID", "Customer Name", "IC / Passport", "Gender", "Email", "Contact number", "Room ID", "Status", "Days", "Start Date", "End Date", "Created At"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Byte.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Byte.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -298,6 +300,12 @@ public class CheckIns extends javax.swing.JFrame {
         endDate.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         endDate.setText("-");
 
+        jLabel13.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel13.setText("Ph No.:");
+
+        contactNumber.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        contactNumber.setText("-");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -307,12 +315,16 @@ public class CheckIns extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(createdAt, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(personalId, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(contactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
@@ -344,14 +356,15 @@ public class CheckIns extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(customerName, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(personalId, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(customerName, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(239, 239, 239)
-                        .addComponent(checkInButton)))
+                        .addComponent(checkInButton))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(createdAt, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(259, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -359,11 +372,11 @@ public class CheckIns extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(createdAt))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(customerName))
@@ -375,7 +388,11 @@ public class CheckIns extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(gender))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(contactNumber))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(customerEmail))
@@ -460,7 +477,7 @@ public class CheckIns extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
@@ -615,6 +632,7 @@ public class CheckIns extends javax.swing.JFrame {
                                 record.getCustomer().getPersonalId(),
                                 record.getCustomer().getGender(),
                                 record.getCustomer().getEmail(),
+                                record.getCustomer().getContactNumber(),
                                 record.getBookedRoom(),
                                 record.getStatus(),
                                 record.getStayDays(),
@@ -702,6 +720,7 @@ public class CheckIns extends javax.swing.JFrame {
     private javax.swing.JLabel bookingStatus;
     private javax.swing.JTable bookingTable;
     private javax.swing.JButton checkInButton;
+    private javax.swing.JLabel contactNumber;
     private javax.swing.JLabel createdAt;
     private javax.swing.JLabel customerEmail;
     private javax.swing.JLabel customerName;
@@ -711,6 +730,7 @@ public class CheckIns extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -734,6 +754,7 @@ public class CheckIns extends javax.swing.JFrame {
     private javax.swing.JLabel startDate;
     // End of variables declaration//GEN-END:variables
 
+    // Refresh combobox with checkinable Booking ID
     private void updateComboBox()
     {
         availableCheckinBooking.removeAllItems();
@@ -755,6 +776,7 @@ public class CheckIns extends javax.swing.JFrame {
         }
     }
     
+    // Update Form with related value
     private void manipulateForm(String recordId)
     {
         if(recordId.equals("None"))
@@ -764,6 +786,7 @@ public class CheckIns extends javax.swing.JFrame {
             personalId.setText("-");
             gender.setText("-");
             customerEmail.setText("-");
+            contactNumber.setText("-");
             bookedRoomId.setText("-");
             bookingStatus.setText("-");
             bookingDays.setText("-");
@@ -781,6 +804,7 @@ public class CheckIns extends javax.swing.JFrame {
                     personalId.setText(record.getCustomer().getPersonalId());
                     gender.setText(Character.toString(record.getCustomer().getGender()));
                     customerEmail.setText(record.getCustomer().getEmail());
+                    contactNumber.setText(record.getCustomer().getContactNumber());
                     bookedRoomId.setText(record.getBookedRoom());
                     bookingStatus.setText(record.getStatus());
                     bookingDays.setText(String.valueOf(record.getStayDays()));

@@ -1,17 +1,10 @@
 package model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import javax.swing.JOptionPane;
-
 import java.util.*;
 
 import controllers.CalculateDays;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.LineNumberReader;
 
 public class Booking {
     /**
@@ -44,7 +37,7 @@ public class Booking {
             )
     );
 
-    private final CalculateDays calculator = new CalculateDays();
+    private static final CalculateDays calculator = new CalculateDays();
     
     /**
      * Constructor for Data Reading
@@ -53,6 +46,7 @@ public class Booking {
      * @param id
      * @param newGender
      * @param email
+     * @param contactNumber
      * @param room
      * @param newStatus
      * @param newStartDate
@@ -67,6 +61,7 @@ public class Booking {
             String id,
             char newGender,
             String email,
+            String contactNumber,
             String room,
             String newStatus,
             LocalDate newStartDate,
@@ -81,7 +76,8 @@ public class Booking {
                 name, 
                 id, 
                 newGender, 
-                email
+                email,
+                contactNumber
         );
         roomId = room;
         status = newStatus;

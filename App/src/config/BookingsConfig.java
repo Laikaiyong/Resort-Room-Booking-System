@@ -1,23 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package config;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import model.Booking;
 
-/**
- *
- * @author USER
- */
 public class BookingsConfig {
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public ArrayList<Booking> bookings = configBooking();
@@ -50,11 +40,12 @@ public class BookingsConfig {
                             bookInformation[4],
                             bookInformation[5],
                             bookInformation[6],
-                            LocalDate.parse(bookInformation[8], dateFormatter),
+                            bookInformation[7],
                             LocalDate.parse(bookInformation[9], dateFormatter),
-                            bookInformation[10],
-                            Float.parseFloat(bookInformation[12]),
-                            Boolean.parseBoolean(bookInformation[14])
+                            LocalDate.parse(bookInformation[10], dateFormatter),
+                            bookInformation[11],
+                            Float.parseFloat(bookInformation[13]),
+                            Boolean.parseBoolean(bookInformation[15])
                     );
                     bookingsRecord.add(newBooking);
                 }
