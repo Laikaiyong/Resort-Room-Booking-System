@@ -28,7 +28,7 @@ public class Rooms extends javax.swing.JFrame {
     /**
      * Creates new form Rooms
      */
-    public Rooms() {
+    Rooms() {
         initComponents();
     }
     
@@ -630,6 +630,7 @@ public class Rooms extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_roomsTableMouseClicked
 
+    // Fill in form with related information    
     private void manipulateForm(int Index)
     {
         recordNumber = Index;
@@ -659,6 +660,7 @@ public class Rooms extends javax.swing.JFrame {
         roomPax.setText(String.valueOf(rooms.get(recordNumber).getPax()));
     }
     
+//    
     private void modifyRoom()
     {
         Room changedRoom = rooms.get(recordNumber);

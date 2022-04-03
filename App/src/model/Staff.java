@@ -1,23 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import java.io.*;
 import java.nio.file.*;
+import java.security.InvalidKeyException;
 
 import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- *
- * @author USER
- */
+// Staff Class for credentials
 public class Staff {
     private static final String ALGORITHM = "AES";
-    private static String KEY = "128BitRertrieval";// 128-bit retrieval
+    private static final String KEY = "128BitRertrieval";// 128-bit retrieval
     // Store credentials
     public static void main(String[] args)
     {
@@ -39,9 +37,9 @@ public class Staff {
             }
             encryptedPass = encryptedPassword.toString();
         }
-        catch(Exception e) 
+        catch(InvalidKeyException | NoSuchAlgorithmException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException e) 
         {
-            e.printStackTrace();
+            System.err.println("Encryption Fail, some error occurs");
         }
       
       File currentDir = new File("src/database/credentials.txt");
@@ -56,6 +54,7 @@ public class Staff {
       } 
     }
     
+    // Pass decrypted credentials
     private static String[] readCredentials()
     {
         String data = "";
@@ -66,7 +65,7 @@ public class Staff {
             try {
                 data = Files.readString(fileName);
             } catch(IOException ioe){
-                ioe.printStackTrace();
+                System.err.println("Credentials data does not exist");
             } 
          } else {
             System.out.println("The file does not exist.");

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views;
 
 import config.BookingsConfig;
@@ -19,19 +15,20 @@ import model.Room;
 
 /**
  *
- * @author USER
+ * CheckIn Booking Screen
  */
 public class CheckIns extends javax.swing.JFrame {
-    private ArrayList<Booking> bookings = new BookingsConfig().bookings;
+    // Initialization
+    private final ArrayList<Booking> bookings = new BookingsConfig().bookings;
     private ArrayList<String> availableCheckin = new ArrayList<>();
-    private ArrayList<Room> rooms = new RoomsConfig().rooms;
+    private final ArrayList<Room> rooms = new RoomsConfig().rooms;
     private boolean confirmed = false;
     
     private final CalculateDays calculator = new CalculateDays();
     /**
      * Creates new form CheckIns
      */
-    public CheckIns() {
+    CheckIns() {
         initComponents();
     }
 
@@ -445,8 +442,8 @@ public class CheckIns extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(availableCheckinBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(availableCheckinBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(selectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(260, 260, 260)
@@ -513,10 +510,10 @@ public class CheckIns extends javax.swing.JFrame {
         boolean proceedable = false;
         if(confirmed)
         {
-            int selectedRecord = Integer.parseInt(String.valueOf(availableCheckinBooking.getSelectedItem()));
+            String selectedRecord = String.valueOf(availableCheckinBooking.getSelectedItem());
             for(Booking record: bookings)
             {
-                if(record.getBookingId() == selectedRecord)
+                if(record.getBookingId().equals(selectedRecord))
                 {
                     if(
                             record.getStartDate().isEqual(LocalDate.now())
@@ -556,7 +553,7 @@ public class CheckIns extends javax.swing.JFrame {
                 {
                     for(Booking record: bookings)
                     {
-                        if(record.getBookingId() == selectedRecord)
+                        if(record.getBookingId().equals(selectedRecord))
                         {
                             for(Room room: rooms)
                             {
@@ -578,7 +575,7 @@ public class CheckIns extends javax.swing.JFrame {
                 }
                 else
                 {
-                    manipulateForm(-1);
+                    manipulateForm("None");
                     JOptionPane.showMessageDialog(
                         null, 
                         "Check In terminated", 
@@ -614,16 +611,16 @@ public class CheckIns extends javax.swing.JFrame {
                             new Object[]
                             {
                                 record.getBookingId(),
-                                record.getCustomerName(),
-                                record.getPersonalId(),
-                                record.getGender(),
-                                record.getCustomerEmail(),
+                                record.getCustomer().getName(),
+                                record.getCustomer().getPersonalId(),
+                                record.getCustomer().getGender(),
+                                record.getCustomer().getEmail(),
                                 record.getBookedRoom(),
                                 record.getStatus(),
                                 record.getStayDays(),
                                 record.getStartDate().toString(),
                                 record.getEndDate().toString(),
-                                record.getCreatedTime().toString()
+                                record.getCreatedTime()
                             }
                     );
                 }
@@ -634,7 +631,7 @@ public class CheckIns extends javax.swing.JFrame {
             e.printStackTrace();
         }
         
-        manipulateForm(-1);
+        manipulateForm("None");
         updateComboBox();
     }//GEN-LAST:event_formComponentShown
 
@@ -651,7 +648,7 @@ public class CheckIns extends javax.swing.JFrame {
         }
         else
         {
-            manipulateForm(Integer.parseInt(selectedRecord));
+            manipulateForm(selectedRecord);
         }
     }//GEN-LAST:event_selectButtonActionPerformed
 
@@ -758,9 +755,9 @@ public class CheckIns extends javax.swing.JFrame {
         }
     }
     
-    private void manipulateForm(int recordId)
+    private void manipulateForm(String recordId)
     {
-        if(recordId == -1)
+        if(recordId.equals("None"))
         {
             createdAt.setText("-");
             customerName.setText("-");
@@ -777,13 +774,13 @@ public class CheckIns extends javax.swing.JFrame {
         {
             for(Booking record: bookings)
             {
-                if(record.getBookingId() == recordId)
+                if(record.getBookingId().equals(recordId))
                 {
                     createdAt.setText(record.getCreatedTime());
-                    customerName.setText(record.getCustomerName());
-                    personalId.setText(record.getPersonalId());
-                    gender.setText(Character.toString(record.getGender()));
-                    customerEmail.setText(record.getCustomerEmail());
+                    customerName.setText(record.getCustomer().getName());
+                    personalId.setText(record.getCustomer().getPersonalId());
+                    gender.setText(Character.toString(record.getCustomer().getGender()));
+                    customerEmail.setText(record.getCustomer().getEmail());
                     bookedRoomId.setText(record.getBookedRoom());
                     bookingStatus.setText(record.getStatus());
                     bookingDays.setText(String.valueOf(record.getStayDays()));

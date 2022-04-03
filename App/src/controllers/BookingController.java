@@ -6,6 +6,7 @@ package controllers;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import model.Booking;
@@ -29,12 +30,12 @@ public class BookingController {
             {
                 printWriter.append(
                     String.format(
-                        "%d, %s, %s, %c, %s, %s, %s, %d, %s, %s, %s, %f, %f, %f, %b\n",
+                        "%s, %s, %s, %c, %s, %s, %s, %d, %s, %s, %s, %f, %f, %f, %b\n",
                         record.getBookingId(),
-                        record.getCustomerName(),
-                        record.getPersonalId(),
-                        record.getGender(),
-                        record.getCustomerEmail(),
+                        record.getCustomer().getName(),
+                        record.getCustomer().getPersonalId(),
+                        record.getCustomer().getGender(),
+                        record.getCustomer().getEmail(),
                         record.getBookedRoom(),
                         record.getStatus(),
                         record.getStayDays(),
@@ -43,7 +44,7 @@ public class BookingController {
                         record.getCreatedTime(),
                         record.getNightPay(),
                         record.getExtraCharges(),
-                        record.getTax(),
+                        record.getTotalTax(),
                         record.getAddedExtra()
                     )
                 );
@@ -51,9 +52,8 @@ public class BookingController {
             }
             printWriter.close();
         }
-        catch(Exception e)
+        catch(IOException e)
         {
-            e.printStackTrace();
         };
     }
 }

@@ -10,6 +10,7 @@ import controllers.BookingController;
 import controllers.CalculateDays;
 import controllers.EmailValidator;
 import controllers.RoomsUpdate;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,12 +19,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.UUID;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Booking;
 import model.Room;
+import model.Customer;
 
 /**
  *
@@ -31,11 +34,10 @@ import model.Room;
  */
 public class Bookings extends javax.swing.JFrame {
     private ArrayList<Booking> bookings = new BookingsConfig().bookings;
-    private ArrayList<Room> rooms = new RoomsConfig().rooms;
+    private final ArrayList<Room> rooms = new RoomsConfig().rooms;
     private int recordNumber = 0;
     private boolean validDate = false;
     private boolean validNewDate = false;
-    private int totalRecord = new BookingsConfig().totalRecord;
     
     private static final DateTimeFormatter datetimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     
@@ -43,7 +45,7 @@ public class Bookings extends javax.swing.JFrame {
     /**
      * Creates new form NewBooking
      */
-    public Bookings() {
+    Bookings() {
         initComponents();
     }
 
@@ -93,7 +95,7 @@ public class Bookings extends javax.swing.JFrame {
         previousQuery = new javax.swing.JButton();
         nextQuery = new javax.swing.JButton();
         lastQuery = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
         bookingId = new javax.swing.JLabel();
         customerName = new javax.swing.JTextField();
@@ -361,14 +363,14 @@ public class Bookings extends javax.swing.JFrame {
             }
         });
 
-        cancelButton.setBackground(new java.awt.Color(255, 0, 51));
-        cancelButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        cancelButton.setForeground(new java.awt.Color(255, 255, 255));
-        cancelButton.setText("Cancel");
-        cancelButton.setToolTipText("");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setBackground(new java.awt.Color(255, 0, 51));
+        deleteButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        deleteButton.setForeground(new java.awt.Color(255, 255, 255));
+        deleteButton.setText("Delete");
+        deleteButton.setToolTipText("");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
@@ -479,14 +481,8 @@ public class Bookings extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bookingId, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(120, 120, 120)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(createdDate, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(bookingId, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(196, 196, 196)
                         .addComponent(maleButton)
@@ -518,11 +514,16 @@ public class Bookings extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(updateButton)
                         .addGap(39, 39, 39)
-                        .addComponent(cancelButton)
+                        .addComponent(deleteButton)
                         .addGap(134, 134, 134))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(80, 80, 80)
+                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(createdDate, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel14))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -530,15 +531,14 @@ public class Bookings extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(createdDate)
-                        .addComponent(jLabel19))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(bookingId)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(bookingId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel19)
+                    .addComponent(createdDate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -597,7 +597,7 @@ public class Bookings extends javax.swing.JFrame {
                             .addComponent(lastQuery))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelButton)
+                    .addComponent(deleteButton)
                     .addComponent(updateButton))
                 .addContainerGap())
         );
@@ -758,7 +758,6 @@ public class Bookings extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(97, 97, 97)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(requestBookingID, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(requestDays, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(requestCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(requestPersonalID, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -766,7 +765,8 @@ public class Bookings extends javax.swing.JFrame {
                                         .addComponent(requestMaleButton)
                                         .addGap(116, 116, 116)
                                         .addComponent(requestFemaleButton))
-                                    .addComponent(requestCustomerEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(requestCustomerEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(requestBookingID, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -784,7 +784,7 @@ public class Bookings extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -964,10 +964,10 @@ public class Bookings extends javax.swing.JFrame {
                         new Object[]
                         {
                             record.getBookingId(),
-                            record.getCustomerName(),
-                            record.getPersonalId(),
-                            record.getGender(),
-                            record.getCustomerEmail(),
+                            record.getCustomer().getName(),
+                            record.getCustomer().getPersonalId(),
+                            record.getCustomer().getGender(),
+                            record.getCustomer().getEmail(),
                             record.getBookedRoom(),
                             record.getStatus(),
                             record.getStayDays(),
@@ -980,7 +980,7 @@ public class Bookings extends javax.swing.JFrame {
         } 
         catch(Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("No Bookings detected.");
         }
         manipulateForm(0);
         validDate = true;
@@ -1008,7 +1008,6 @@ public class Bookings extends javax.swing.JFrame {
             }
             catch(Exception e)
             {
-                e.printStackTrace();
                 JOptionPane.showMessageDialog(
                     null, 
                     "Value is not Date", 
@@ -1028,7 +1027,6 @@ public class Bookings extends javax.swing.JFrame {
                             "Error Date Query", 
                             JOptionPane.ERROR_MESSAGE
                     );
-                    proceedable=false;
                 }
                 else
                 {
@@ -1068,67 +1066,72 @@ public class Bookings extends javax.swing.JFrame {
         validDate = false;
     }//GEN-LAST:event_endDatePropertyChange
 
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        bookings = new BookingsConfig().bookings;
-        int selectedBooking = Integer.parseInt(bookingId.getText());
-        
-        if (
-                JOptionPane.showConfirmDialog
-                (
-                    null,
-                    "This action can't be undo. Are you sure you want to cancel booking#ID" + String.valueOf(selectedBooking),
-                    "Confirmation",
-                    JOptionPane.YES_NO_OPTION
-                ) == JOptionPane.YES_OPTION
-        )
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        if(deleteButton.isEnabled())
         {
-            for(Booking record: bookings)
+            bookings = new BookingsConfig().bookings;
+            String selectedBooking = bookingId.getText();
+
+            if (
+                    JOptionPane.showConfirmDialog
+                    (
+                        null,
+                        "This action can't be undo. Are you sure you want to cancel booking#ID" + String.valueOf(selectedBooking),
+                        "Confirmation",
+                        JOptionPane.YES_NO_OPTION
+                    ) == JOptionPane.YES_OPTION
+            )
             {
-                if(record.getBookingId() == selectedBooking)
+                for(Booking record: bookings)
                 {
-                    if(record.getStatus().equals("CheckIn"))
+                    if(record.getBookingId().equals(selectedBooking))
                     {
-                        for(Room room: rooms)
+                        if(record.getStatus().equals("CheckIn"))
                         {
-                            if(room.getRoomNumber().equals(record.getBookedRoom()))
+                            for(Room room: rooms)
                             {
-                                room.setStatus("Available");
+                                if(room.getRoomNumber().equals(record.getBookedRoom()))
+                                {
+                                    room.setStatus("Available");
+                                }
                             }
                         }
+                        bookings.remove(record);
+                        break;
                     }
-                    record.setStatus("Cancelled");
-                    break;
                 }
+                new RoomsUpdate().updateRoomDatabase(rooms);
+                new BookingController().updateBookingDatabase(bookings);
+                ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "Record Deleted", 
+                        "Success Deletion", 
+                        JOptionPane.INFORMATION_MESSAGE, 
+                        successIcon
+                );
+                setVisible(false);
+                setVisible(true);
             }
-            new RoomsUpdate().updateRoomDatabase(rooms);
-            new BookingController().updateBookingDatabase(bookings);
-            ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
-            JOptionPane.showMessageDialog(
-                    null, 
-                    "Record Cancelled", 
-                    "Success Cancellation", 
-                    JOptionPane.INFORMATION_MESSAGE, 
-                    successIcon
-            );
-            setVisible(false);
-            setVisible(true);
         }
-    }//GEN-LAST:event_cancelButtonActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         bookings = new BookingsConfig().bookings;
-        if(validDate)
+        if(validDate && updateButton.isEnabled())
         {
             int selectedBooking = Integer.parseInt(bookingId.getText());
             char newGender = maleButton.isSelected() ? 'M' : 'F'; 
+            Customer newCustomer = new Customer();
             for(Booking record: bookings)
             {
-                if(record.getBookingId() == selectedBooking)
+                if(record.getBookingId().equals(selectedBooking))
                 {
-                    record.setCustomerName(customerName.getText().trim());
-                    record.setICPassport(personalId.getText().trim());
-                    record.setGender(newGender);
-                    record.setEmail(email.getText().trim());
+                    newCustomer.setName(customerName.getText().trim());
+                    newCustomer.setPersonalId(personalId.getText().trim());
+                    newCustomer.setGender(newGender);
+                    newCustomer.setEmail(email.getText().trim());
+                    record.setCustomer(newCustomer);
                     record.setRoom(roomIdCombo.getModel().getSelectedItem().toString());
                     record.setStartDate(startDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                     record.setEndDate(endDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
@@ -1215,9 +1218,8 @@ public class Bookings extends javax.swing.JFrame {
                }
             }
         }
-        catch(Exception e)
+        catch(HeadlessException e)
         {
-            e.printStackTrace();
             validNewDate = false;
             JOptionPane.showMessageDialog(
                 null, 
@@ -1280,13 +1282,14 @@ public class Bookings extends javax.swing.JFrame {
                         }
                     }
                 }
-                HashSet<String> uniqueInvalid = new HashSet<String>(invalidRoom);
+                HashSet<String> uniqueInvalid = new HashSet<>(invalidRoom);
                 
                 validRoom.removeAll(uniqueInvalid);
                 
+                UUID newRecordId = UUID.randomUUID();
                 requestAvailableRoomCombo.removeAllItems();
-                requestAvailableRoomCombo.setModel(new DefaultComboBoxModel<String>(validRoom.toArray(new String[0])));
-                requestBookingID.setText(String.valueOf(totalRecord + 1));
+                requestAvailableRoomCombo.setModel(new DefaultComboBoxModel<>(validRoom.toArray(String[]::new)));
+                requestBookingID.setText(newRecordId.toString());
                 requestDays.setText(String.valueOf(calculator.dateDifference(newStartDate, newEndDate)));
                 requestMaleButton.doClick();
             }
@@ -1318,25 +1321,23 @@ public class Bookings extends javax.swing.JFrame {
             int selectedRow = bookingTable.getSelectedRow();
             if (selectedRow >= 0)
             {
-                int selectedBookingId = Integer.parseInt(
-                        String.valueOf(
-                                bookingTable.getModel().getValueAt(selectedRow, 0)
-                        )
+                String selectedBookingId = String.valueOf(
+                    bookingTable.getModel().getValueAt(selectedRow, 0)
                 );
                 for(Booking record: bookings)
                 {
-                    if(record.getBookingId() == selectedBookingId)
+                    if(record.getBookingId().equals(selectedBookingId))
                     {
-                        recordNumber = selectedBookingId - 1;
+                        recordNumber = selectedRow;
                         manipulateForm(recordNumber);
                         break;
                     }
                 }
             }
         }
-        catch(Exception excep)
+        catch(NumberFormatException excep)
         {
-            excep.printStackTrace();
+            System.err.println("No row being selected");
         }
     }//GEN-LAST:event_bookingTableMouseClicked
 
@@ -1376,11 +1377,13 @@ public class Bookings extends javax.swing.JFrame {
         });
     }
     
+     //  Add new booking record
     private void addRecord()
     {
+        //    Initialization    
         boolean proceedable = true;
         
-        int newId = 0;
+        String newId = "";
         LocalDate newStartDate = LocalDate.now();
         LocalDate newEndDate = LocalDate.now();
         String newRoomId = "";
@@ -1391,7 +1394,7 @@ public class Bookings extends javax.swing.JFrame {
         
         try
         {
-            newId = Integer.parseInt(requestBookingID.getText().trim());
+            newId = requestBookingID.getText().trim();
             newStartDate = requestStartDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             newEndDate = requestEndDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             newRoomId = String.valueOf(requestAvailableRoomCombo.getModel().getSelectedItem());
@@ -1402,7 +1405,6 @@ public class Bookings extends javax.swing.JFrame {
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(
                 null, 
                 "Value inserted are invalid or There are empty field", 
@@ -1426,12 +1428,15 @@ public class Bookings extends javax.swing.JFrame {
         
         if(proceedable && validNewDate)
         {
+            Customer newCustomer = new Customer(
+                    newCusName, 
+                    newPersonalId, 
+                    newGender, 
+                    newCusEmail
+            );
             Booking newBookingRequest = new Booking(
                 newId,
-                newCusName,
-                newPersonalId,
-                newGender,
-                newCusEmail,
+                newCustomer,
                 newRoomId,
                 "Booked",
                 newStartDate,
@@ -1461,31 +1466,33 @@ public class Bookings extends javax.swing.JFrame {
             );  
         }
     }
-       
+    
+    // Update View / Edit / Delete Booking Form
     private void manipulateForm(int index)
     {
+        // Set Record Number to valid number        
         recordNumber = index;
-        if (recordNumber >= bookings.size())
+        if(recordNumber >= bookings.size())
         {
             recordNumber = 0;
         }
         else
         {
-            if (recordNumber < 0)
+            if(recordNumber < 0)
             {
                 recordNumber = bookings.size() - 1;
             }
         }
         
-        updateComboBox(bookings.get(recordNumber).getStartDate(), bookings.get(recordNumber).getEndDate());
-        
-        if (bookings.size() != 0)
+        //  When there are booking records      
+        if(!bookings.isEmpty())
         {
+            updateComboBox(bookings.get(recordNumber).getStartDate(), bookings.get(recordNumber).getEndDate());
             bookingId.setText(String.valueOf(bookings.get(recordNumber).getBookingId()));
             createdDate.setText(bookings.get(recordNumber).getCreatedTime());
-            customerName.setText(bookings.get(recordNumber).getCustomerName());
-            personalId.setText(bookings.get(recordNumber).getPersonalId());
-            if (bookings.get(recordNumber).getGender() == 'M')
+            customerName.setText(bookings.get(recordNumber).getCustomer().getName());
+            personalId.setText(bookings.get(recordNumber).getCustomer().getPersonalId());
+            if (bookings.get(recordNumber).getCustomer().getGender() == 'M')
             {
                 maleButton.doClick();
             }
@@ -1500,36 +1507,47 @@ public class Bookings extends javax.swing.JFrame {
                             bookings.get(recordNumber).getStatus().equals("CheckOut")
                     ) ? false : true
             );
-            email.setText(bookings.get(recordNumber).getCustomerEmail());
+            email.setText(bookings.get(recordNumber).getCustomer().getEmail());
             roomIdCombo.getModel().setSelectedItem(bookings.get(recordNumber).getBookedRoom());
             bookingStatus.setText(bookings.get(recordNumber).getStatus());
             days.setText(String.valueOf(bookings.get(recordNumber).getStayDays()));
             startDate.setDate(Date.from(bookings.get(recordNumber).getStartDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             endDate.setDate(Date.from(bookings.get(recordNumber).getEndDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            updateButton.setEnabled(true);
+            deleteButton.setEnabled(true);
+        }
+        //  No booking records loaded      
+        else
+        {
+            bookingId.setText("-");
+            createdDate.setText("-");
+            customerName.setText("");
+            personalId.setText("");
+            dateValidateButton.setEnabled(false);
+            email.setText("");
+            roomIdCombo.getModel().setSelectedItem("None");
+            bookingStatus.setText("");
+            days.setText("");
+            startDate.setDate(null);
+            endDate.setDate(null);
+            updateButton.setEnabled(false);
+            deleteButton.setEnabled(false);
         }
     }
     
+    // Search for record based on statement id, customer name and room id
     private void searchRecord()
     {
         ArrayList<Booking> searchResult = new ArrayList<>();
-        String searchKey = searchField.getText();
-        int bookingNumber = 0;
-        try
-        {
-            bookingNumber = Integer.parseInt(searchKey);   
-        }
-        catch(Exception e)
-        {
-            System.err.println("Error, not a number");
-        }
+        String searchKey = searchField.getText().trim();
         for(Booking record: bookings)
         {
             if(
                 record.getBookedRoom().equals(searchKey)
                 ||
-                record.getCustomerName().equals(searchKey)
+                record.getCustomer().getName().equals(searchKey)
                 ||
-                record.getBookingId() == bookingNumber
+                record.getBookingId().equals(searchKey)
             )
             {
                 searchResult.add(record);
@@ -1589,12 +1607,12 @@ public class Bookings extends javax.swing.JFrame {
                 }
             }
         }
-        HashSet<String> uniqueInvalid = new HashSet<String>(invalidRoom);
+        HashSet<String> uniqueInvalid = new HashSet<>(invalidRoom);
 
         validRoom.removeAll(uniqueInvalid);
 
         roomIdCombo.removeAllItems();
-        roomIdCombo.setModel(new DefaultComboBoxModel<String>(validRoom.toArray(new String[0])));
+        roomIdCombo.setModel(new DefaultComboBoxModel<>(validRoom.toArray(String[]::new)));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1606,11 +1624,11 @@ public class Bookings extends javax.swing.JFrame {
     private javax.swing.JLabel bookingId;
     private javax.swing.JLabel bookingStatus;
     private javax.swing.JTable bookingTable;
-    private javax.swing.JButton cancelButton;
     private javax.swing.JLabel createdDate;
     private javax.swing.JTextField customerName;
     private javax.swing.JButton dateValidateButton;
     private javax.swing.JLabel days;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JTextField email;
     private org.jdesktop.swingx.JXDatePicker endDate;
     private javax.swing.JRadioButton femaleButton;
@@ -1679,7 +1697,7 @@ public class Bookings extends javax.swing.JFrame {
     private org.jdesktop.swingx.JXDatePicker startDate;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
-
+    
     private void dateChangedQuery()
     {
         try
@@ -1705,12 +1723,13 @@ public class Bookings extends javax.swing.JFrame {
                 );
             }
         }
-        catch(Exception e) 
+        catch(HeadlessException e) 
         {
         }
         
     }
     
+    //  Used to launch page
     public void run()
     {
         new Bookings().setVisible(true);

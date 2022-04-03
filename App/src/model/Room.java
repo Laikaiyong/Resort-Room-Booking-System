@@ -13,7 +13,10 @@ public class Room {
     private boolean maintenance;
     private int paxForBed;
     
-    private List<String> validStatus = new ArrayList<String>(
+    /**
+     * Validated status
+     */
+    private static final List<String> validStatus = new ArrayList<>(
             Arrays.asList(
                     "Cleaning",
                     "Available",
@@ -21,6 +24,14 @@ public class Room {
             )
     );
     
+    /**
+    * Constructor
+     * @param newView
+     * @param newRoomNo
+     * @param newStatus
+     * @param maintenanceStatus
+     * @param newPax
+    */
     public Room(
             String newView,
             String newRoomNo,
@@ -104,6 +115,7 @@ public class Room {
         return this.paxForBed;
     }
     
+    // Display message when printed
     @Override
     public String toString()
     {

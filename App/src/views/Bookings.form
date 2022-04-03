@@ -374,17 +374,10 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel3" min="-2" pref="69" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="bookingId" min="-2" pref="136" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="jLabel19" min="-2" pref="72" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
+                                          <Component id="bookingId" min="-2" pref="310" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="createdDate" min="-2" pref="130" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -427,12 +420,18 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="updateButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                          <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel13" alignment="0" min="-2" pref="111" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel13" min="-2" pref="111" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="jLabel19" min="-2" pref="72" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="createdDate" min="-2" pref="130" max="-2" attributes="0"/>
+                              </Group>
                               <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -445,18 +444,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="createdDate" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="bookingId" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bookingId" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="createdDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -529,7 +526,7 @@
                   </Group>
                   <EmptySpace pref="18" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="deleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="updateButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -723,7 +720,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lastQueryActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="cancelButton">
+        <Component class="javax.swing.JButton" name="deleteButton">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="0" red="ff" type="rgb"/>
@@ -734,11 +731,11 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cancel"/>
+            <Property name="text" type="java.lang.String" value="Delete"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="updateButton">
@@ -1040,7 +1037,6 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="requestBookingID" min="-2" pref="211" max="-2" attributes="0"/>
                                               <Component id="requestDays" min="-2" pref="211" max="-2" attributes="0"/>
                                               <Component id="requestCustomerName" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
                                               <Component id="requestPersonalID" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
@@ -1050,6 +1046,7 @@
                                                   <Component id="requestFemaleButton" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Component id="requestCustomerEmail" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
+                                              <Component id="requestBookingID" alignment="0" min="-2" pref="312" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -1076,7 +1073,7 @@
                                   <Component id="addButton" min="-2" pref="265" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="97" max="32767" attributes="0"/>
+                          <EmptySpace pref="67" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

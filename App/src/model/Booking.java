@@ -17,31 +17,28 @@ public class Booking {
     /**
      * Attributes
      */
-    private int bookingId;
-    private String customerName;
-    private String personalId;
-    private char gender;
-    private String customerEmail;
+    private String bookingId;
+    private Customer bookingCustomer;
     private String roomId;
     private String status;
     private int stayDays;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String createdAt;
-    private float pricePerNight;
+    private final String createdAt;
     private float nightPay;
     private float serviceTax;
     private float tourismTax;
     private float finalPayment;
     private boolean addedCharges;
     private float addAmount;
+    private final static float PRICE_PER_NIGHT = 350f;
     
-    private static final File bookFile = new File("src/database/records.txt");
-    
-    private List<String> validStatus = new ArrayList<String>(
+    /**
+     * Validated Status
+     */
+    private static final List<String> validStatus = new ArrayList<>(
             Arrays.asList(
                     "Booked",
-                    "Cancelled",
                     "CheckIn",
                     "CheckOut"
             )
@@ -50,10 +47,22 @@ public class Booking {
     private final CalculateDays calculator = new CalculateDays();
     
     /**
-     * Constructor
+     * Constructor for Data Reading
+     * @param recordId
+     * @param name
+     * @param id
+     * @param newGender
+     * @param email
+     * @param room
+     * @param newStatus
+     * @param newStartDate
+     * @param newEndDate
+     * @param newCreatedAt
+     * @param extraCharges
+     * @param addedExtra
      */
     public Booking(
-            int recordId,
+            String recordId,
             String name, 
             String id,
             char newGender,
@@ -68,18 +77,19 @@ public class Booking {
         )
     {
         bookingId = recordId;
-        customerName = name;
-        personalId = id;
-        gender = newGender;
-        customerEmail = email;
+        bookingCustomer = new Customer(
+                name, 
+                id, 
+                newGender, 
+                email
+        );
         roomId = room;
         status = newStatus;
         stayDays = calculator.dateDifference(newStartDate, newEndDate);
         startDate = newStartDate;
         endDate = newEndDate;
         createdAt = newCreatedAt;
-        pricePerNight = 350f;
-        nightPay = pricePerNight * stayDays;
+        nightPay = PRICE_PER_NIGHT * stayDays;
         serviceTax = nightPay * 0.10f;
         tourismTax = stayDays * 10f;
         addAmount = extraCharges;
@@ -88,31 +98,56 @@ public class Booking {
     }
     
     /**
+     * Constructor for New Booking
+     * @param recordId
+     * @param newCustomer
+     * @param room
+     * @param newStatus
+     * @param newStartDate
+     * @param newEndDate
+     * @param newCreatedAt
+     * @param extraCharges
+     * @param addedExtra
+     */
+    public Booking(
+            String recordId,
+            Customer newCustomer,
+            String room,
+            String newStatus,
+            LocalDate newStartDate,
+            LocalDate newEndDate,
+            String newCreatedAt,
+            float extraCharges,
+            boolean addedExtra
+    )
+    {
+        bookingId = recordId;
+        bookingCustomer = newCustomer;
+        roomId = room;
+        status = newStatus;
+        stayDays = calculator.dateDifference(newStartDate, newEndDate);
+        startDate = newStartDate;
+        endDate = newEndDate;
+        createdAt = newCreatedAt;
+        nightPay = PRICE_PER_NIGHT * stayDays;
+        serviceTax = nightPay * 0.10f;
+        tourismTax = stayDays * 10f;
+        addAmount = extraCharges;
+        finalPayment = nightPay + serviceTax + tourismTax + addAmount;
+        addedCharges = addedExtra; 
+    }
+    
+    /**
      * Setters
      */
-    public void setBookingId(int requestNum)
+    public void setBookingId(String requestNum)
     {
         this.bookingId = requestNum;
     }
     
-    public void setCustomerName(String name)
+    public void setCustomer(Customer editedCustomer)
     {
-        this.customerName = name;
-    }
-
-    public void setICPassport(String id)
-    {
-        this.personalId = id;
-    }
-
-    public void setGender(char gender)
-    {
-        this.gender = gender;
-    }
-    
-    public void setEmail(String email)
-    {
-        this.customerEmail = email;
+        this.bookingCustomer = editedCustomer;
     }
     
     public void setRoom(String roomId)
@@ -161,29 +196,14 @@ public class Booking {
     /**
      * Getters
      */
-    public int getBookingId()
+    public String getBookingId()
     {
         return this.bookingId;
     }
 
-    public String getCustomerName()
+    public Customer getCustomer()
     {
-        return this.customerName;
-    }
-
-    public String getPersonalId()
-    {
-        return this.personalId;
-    }
-
-    public char getGender()
-    {
-        return this.gender;
-    }
-
-    public String getCustomerEmail()
-    {
-        return this.customerEmail;
+        return this.bookingCustomer;
     }
 
     public String getBookedRoom()
@@ -221,7 +241,17 @@ public class Booking {
         return this.nightPay;
     }
     
-    public float getTax()
+    public float getServiceTax()
+    {
+        return this.serviceTax;
+    }
+    
+    public float getTourismTax()
+    {
+        return this.tourismTax;
+    }
+    
+    public float getTotalTax()
     {
         return this.serviceTax + this.tourismTax;
     }
@@ -241,6 +271,7 @@ public class Booking {
         return this.addedCharges;
     }
     
+    // Display when object being printed
     @Override
     public String toString()
     {

@@ -19,7 +19,7 @@ public class Receipt extends javax.swing.JFrame {
     /**
      * Creates new form Receipt
      */
-    public Receipt() {
+    Receipt() {
         initComponents();
     }
 
@@ -184,19 +184,21 @@ public class Receipt extends javax.swing.JFrame {
         screen.receiptArea.append(
                 "\n\nBooking Id: #" + record.getBookingId() + 
                 "\n\nCustomer Details\n" + pattern + "\n" +
-                "Name:\t" + record.getCustomerName() + "\n" +
-                "IC/Passport:\t" + record.getPersonalId() + "\n" +
-                "Gender:\t" + record.getGender() + "\n" +
-                "E-mail:\t" + record.getCustomerEmail() + "\n" +
+                "Name:\t" + record.getCustomer().getName() + "\n" +
+                "IC/Passport:\t" + record.getCustomer().getPersonalId() + "\n" +
+                "Gender:\t" + record.getCustomer().getGender() + "\n" +
+                "E-mail:\t" + record.getCustomer().getEmail() + "\n" +
                 "\n\nBooking Details\n" + pattern + "\n" +
                 "Room Id:\t\t" + record.getBookedRoom() + "\n" +
                 "Dates:\t\t" + record.getStartDate() + " to " + 
                 record.getEndDate() + " (" + record.getStayDays() + " days)\n" +
-                "Room Charges:\t" + 
+                "Room Charges: \tRM " + 
                 String.format("%.2f", new BigDecimal(record.getNightPay())) + "\n" +
-                "Extra Charges\t\t" + String.format("%.2f", new BigDecimal(record.getExtraCharges())) + "\n" +
-                "Taxes:\t\t"+ String.format("%.2f", new BigDecimal(record.getTax())) + "\n" +
-                "Total Payment:\t" + String.format("%.2f", new BigDecimal(record.getTotalPayment()))
+                "Extra Charges: \tRM " + String.format("%.2f ", new BigDecimal(record.getExtraCharges())) + "\n" +
+                "Service Taxes:  \tRM " + String.format("%.2f", new BigDecimal(record.getServiceTax())) + "\n" +
+                "Tourism Taxes:   \tRM " + String.format("%.2f", new BigDecimal(record.getTourismTax())) + "\n" +
+                "Total Taxes:\t\tRM "+ String.format("%.2f", new BigDecimal(record.getTotalTax())) + "\n" +
+                "Total Payment: \tRM " + String.format("%.2f", new BigDecimal(record.getTotalPayment())) + "\n" + pattern
         );
     }
 }

@@ -40,8 +40,8 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel2" min="-2" pref="82" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="availableCheckoutBooking" min="-2" pref="97" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="availableCheckoutBooking" min="-2" pref="354" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="selectButton" min="-2" pref="97" max="-2" attributes="0"/>
                           </Group>
                       </Group>

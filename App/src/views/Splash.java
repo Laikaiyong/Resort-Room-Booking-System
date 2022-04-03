@@ -103,9 +103,9 @@ public class Splash extends javax.swing.JFrame {
                screen.loadingProgress.setString(percentage + "%");
            }
         } 
-        catch(Exception e)
+        catch(InterruptedException e)
         {
-            e.printStackTrace();
+            System.err.println("Loading screen facing error");
         }
         screen.dispose();
         new Login().setVisible(true);

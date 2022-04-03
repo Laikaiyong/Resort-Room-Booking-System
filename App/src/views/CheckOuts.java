@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views;
 
 import config.BookingsConfig;
@@ -9,6 +5,7 @@ import config.RoomsConfig;
 import controllers.BookingController;
 import controllers.CalculateDays;
 import controllers.RoomsUpdate;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,19 +18,20 @@ import model.Room;
 
 /**
  *
- * @author USER
+ * CheckOuts Booking Screen
  */
 public class CheckOuts extends javax.swing.JFrame {
-    private ArrayList<Booking> bookings = new BookingsConfig().bookings;
+    //   Initialization
+    private final ArrayList<Booking> bookings = new BookingsConfig().bookings;
     private ArrayList<String> availableCheckout = new ArrayList<>();
-    private ArrayList<Room> rooms = new RoomsConfig().rooms;
+    private final ArrayList<Room> rooms = new RoomsConfig().rooms;
     private boolean confirmed = false;
 
     private final CalculateDays calculator = new CalculateDays();
     /**
      * Creates new form CheckOuts
      */
-    public CheckOuts() {
+    CheckOuts() {
         initComponents();
     }
 
@@ -548,8 +546,8 @@ public class CheckOuts extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(availableCheckoutBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(availableCheckoutBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(selectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -614,10 +612,10 @@ public class CheckOuts extends javax.swing.JFrame {
         boolean proceedable = true;
         if(confirmed)
         {
-            int selectedRecord = Integer.parseInt(String.valueOf(availableCheckoutBooking.getSelectedItem()));
+            String selectedRecord = String.valueOf(availableCheckoutBooking.getSelectedItem());
             for(Booking record: bookings)
             {
-                if(record.getBookingId() == selectedRecord)
+                if(record.getBookingId().equals(selectedRecord))
                 {
                     if(
                             record.getEndDate().isEqual(LocalDate.now())
@@ -657,7 +655,7 @@ public class CheckOuts extends javax.swing.JFrame {
                 {
                     for(Booking record: bookings)
                     {
-                        if(record.getBookingId() == selectedRecord)
+                        if(record.getBookingId().equals(selectedRecord))
                         {
                             for(Room room: rooms)
                             {
@@ -671,7 +669,7 @@ public class CheckOuts extends javax.swing.JFrame {
                             break;
                         }
                     }
-                    manipulateForm(-1);
+                    manipulateForm("None");
                     new RoomsUpdate().updateRoomDatabase(rooms);
                     new BookingController().updateBookingDatabase(bookings);
                     confirmed = false;
@@ -680,7 +678,7 @@ public class CheckOuts extends javax.swing.JFrame {
                 }
                 else
                 {
-                    manipulateForm(-1);
+                    manipulateForm("None");
                     JOptionPane.showMessageDialog(
                         null, 
                         "Check Out terminated", 
@@ -715,7 +713,7 @@ public class CheckOuts extends javax.swing.JFrame {
         }
         else
         {
-            manipulateForm(Integer.parseInt(selectedRecord));
+            manipulateForm(selectedRecord);
         }
     }//GEN-LAST:event_selectButtonActionPerformed
 
@@ -735,10 +733,10 @@ public class CheckOuts extends javax.swing.JFrame {
                             new Object[]
                             {
                                 record.getBookingId(),
-                                record.getCustomerName(),
-                                record.getPersonalId(),
-                                record.getGender(),
-                                record.getCustomerEmail(),
+                                record.getCustomer().getName(),
+                                record.getCustomer().getPersonalId(),
+                                record.getCustomer().getGender(),
+                                record.getCustomer().getEmail(),
                                 record.getBookedRoom(),
                                 record.getStatus(),
                                 record.getStayDays(),
@@ -752,7 +750,7 @@ public class CheckOuts extends javax.swing.JFrame {
         } 
         catch(Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Table cant be updated");
         }
         
         updateComboBox();
@@ -770,29 +768,23 @@ public class CheckOuts extends javax.swing.JFrame {
                 int selectedRow = bookingTable.getSelectedRow();
                 if (selectedRow >= 0)
                 {
-                    int selectedBookingId = Integer.parseInt(
-                            String.valueOf(
-                                    bookingTable.getModel().getValueAt(selectedRow, 0)
-                            )
+                    String selectedBookingId = String.valueOf(
+                        bookingTable.getModel().getValueAt(selectedRow, 0)
                     );
                     for(Booking record: bookings)
                     {
-                        if(record.getBookingId() == selectedBookingId)
+                        if(record.getBookingId().equals(selectedBookingId))
                         {
                             new Receipt().display(record);
                             break;
                         }
                     }
                 }
-                else
-                {
-                // Possible handling of no selected row.
-                }
             }
         }
-        catch(Exception excep)
+        catch(NumberFormatException excep)
         {
-            excep.printStackTrace();
+            System.err.println("Table row cannot be converted to number");
         }
     }//GEN-LAST:event_bookingTableMouseClicked
 
@@ -891,6 +883,7 @@ public class CheckOuts extends javax.swing.JFrame {
     private javax.swing.JLabel totalPayment;
     // End of variables declaration//GEN-END:variables
 
+    // Add Extra Charges for booking
     private void addExtraCharges()
     {
         if(addChargesButton.isEnabled())
@@ -911,7 +904,7 @@ public class CheckOuts extends javax.swing.JFrame {
                     addChargesButton.setEnabled(false);
                     for(Booking record: bookings)
                     {
-                        if(record.getBookingId() == Integer.parseInt(
+                        if(record.getBookingId().equals(
                                 String.valueOf(
                                         availableCheckoutBooking.getSelectedItem()
                                 )
@@ -919,6 +912,7 @@ public class CheckOuts extends javax.swing.JFrame {
                         )
                         {
                             record.setAddedCharges(extraChargesValue);
+                            taxesLabel.setText(String.format("RM %.2f", new BigDecimal(record.getTotalTax())));
                             totalPayment.setText(String.format("RM %.2f", new BigDecimal(record.getTotalPayment())));
                         }
                     }
@@ -927,9 +921,8 @@ public class CheckOuts extends javax.swing.JFrame {
                     setVisible(true);
                 }
             }
-            catch(Exception e)
+            catch(HeadlessException | NumberFormatException e)
             {
-                e.printStackTrace();
                 JOptionPane.showMessageDialog(
                         null, 
                         "Non-numerical value is not allowed in this field", 
@@ -962,9 +955,9 @@ public class CheckOuts extends javax.swing.JFrame {
         }
     }
     
-    private void manipulateForm(int recordId)
+    private void manipulateForm(String recordId)
     {
-        if(recordId == -1)
+        if(recordId.equals("None"))
         {
             createdAt.setText("-");
             customerName.setText("-");
@@ -987,20 +980,20 @@ public class CheckOuts extends javax.swing.JFrame {
         {
             for(Booking record: bookings)
             {
-                if(record.getBookingId() == recordId)
+                if(record.getBookingId().equals(recordId))
                 {
                     createdAt.setText(record.getCreatedTime());
-                    customerName.setText(record.getCustomerName());
-                    personalId.setText(record.getPersonalId());
-                    gender.setText(Character.toString(record.getGender()));
-                    customerEmail.setText(record.getCustomerEmail());
+                    customerName.setText(record.getCustomer().getName());
+                    personalId.setText(record.getCustomer().getPersonalId());
+                    gender.setText(Character.toString(record.getCustomer().getGender()));
+                    customerEmail.setText(record.getCustomer().getEmail());
                     bookedRoomId.setText(record.getBookedRoom());
                     bookingStatus.setText(record.getStatus());
                     bookingDays.setText(String.valueOf(record.getStayDays()));
                     startDate.setText(record.getStartDate().toString());
                     endDate.setText(record.getEndDate().toString());
                     nightsPay.setText(String.format("RM %.2f", new BigDecimal(record.getNightPay())));
-                    taxesLabel.setText(String.format("RM %.2f", new BigDecimal(record.getTax())));
+                    taxesLabel.setText(String.format("RM %.2f", new BigDecimal(record.getTotalTax())));
                     extraCharges.setText(String.format("%.2f", new BigDecimal(record.getExtraCharges())));
                     totalPayment.setText(String.format("RM %.2f", new BigDecimal(record.getTotalPayment())));
                     extraCharges.setEditable(!record.getAddedExtra());
@@ -1012,6 +1005,7 @@ public class CheckOuts extends javax.swing.JFrame {
         }
     }
     
+    // Used to launch CheckOut Screen
     public void run()
     {
         new CheckOuts().setVisible(true);
