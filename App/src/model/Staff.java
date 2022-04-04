@@ -2,8 +2,8 @@ package model;
 
 import java.io.*;
 import java.nio.file.*;
-import java.security.InvalidKeyException;
 
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;

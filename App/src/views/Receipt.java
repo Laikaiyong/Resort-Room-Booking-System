@@ -185,10 +185,11 @@ public class Receipt extends javax.swing.JFrame {
         screen.receiptArea.append(
                 "\n\nBooking Id: #" + record.getBookingId() + 
                 "\n\nCustomer Details\n" + pattern + "\n" +
-                "Name:\t" + record.getCustomer().getName() + "\n" +
-                "IC/Passport:\t" + record.getCustomer().getPersonalId() + "\n" +
-                "Gender:\t" + record.getCustomer().getGender() + "\n" +
-                "E-mail:\t" + record.getCustomer().getEmail() + "\n" +
+                "Name:\t\t" + record.getCustomer().getName() + "\n" +
+                "IC/Passport:\t\t" + record.getCustomer().getPersonalId() + "\n" +
+                "Gender:\t\t" + record.getCustomer().getGender() + "\n" +
+                "E-mail:\t\t" + record.getCustomer().getEmail() + "\n" +
+                "Contact Number:\t" + record.getCustomer().getContactNumber() + "\n" +
                 "\n\nBooking Details\n" + pattern + "\n" +
                 "Room Id:\t\t" + record.getBookedRoom() + "\n" +
                 "Dates:\t\t" + record.getStartDate() + " to " + 

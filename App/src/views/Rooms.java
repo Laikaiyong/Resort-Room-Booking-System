@@ -554,26 +554,19 @@ public class Rooms extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         DefaultTableModel tableModel =  (DefaultTableModel) roomsTable.getModel();
-        tableModel.setRowCount(0);
-        try 
-        {         
-            for(Room room : rooms)
-            {
-                tableModel.addRow(
-                        new Object[]
-                        {
-                            room.getRoomNumber(),
-                            room.getView(),
-                            room.getRoomStatus(),
-                            room.getMaintenance(),
-                            room.getPax()
-                        }
-                );
-            }
-        } 
-        catch(Exception e) 
+        tableModel.setRowCount(0);     
+        for(Room room : rooms)
         {
-            e.printStackTrace();
+            tableModel.addRow(
+                    new Object[]
+                    {
+                        room.getRoomNumber(),
+                        room.getView(),
+                        room.getRoomStatus(),
+                        room.getMaintenance(),
+                        room.getPax()
+                    }
+            );
         }
         manipulateForm(0);
     }//GEN-LAST:event_formComponentShown
@@ -605,28 +598,21 @@ public class Rooms extends javax.swing.JFrame {
     }//GEN-LAST:event_searchFieldKeyPressed
 
     private void roomsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roomsTableMouseClicked
-        try
+        int selectedRow = roomsTable.getSelectedRow();
+        if (selectedRow >= 0)
         {
-            int selectedRow = roomsTable.getSelectedRow();
-            if (selectedRow >= 0)
+            String selectedRoomId = String.valueOf(
+                 roomsTable.getModel().getValueAt(selectedRow, 0)
+             );
+            for(Room record: rooms)
             {
-                String selectedRoomId = String.valueOf(
-                     roomsTable.getModel().getValueAt(selectedRow, 0)
-                 );
-                for(Room record: rooms)
+                if(record.getRoomNumber().equals(selectedRoomId))
                 {
-                    if(record.getRoomNumber().equals(selectedRoomId))
-                    {
-                        recordNumber = selectedRow;
-                        manipulateForm(recordNumber);
-                        break;
-                    }
+                    recordNumber = selectedRow;
+                    manipulateForm(recordNumber);
+                    break;
                 }
             }
-        }
-        catch(Exception excep)
-        {
-            excep.printStackTrace();
         }
     }//GEN-LAST:event_roomsTableMouseClicked
 
@@ -660,27 +646,39 @@ public class Rooms extends javax.swing.JFrame {
         roomPax.setText(String.valueOf(rooms.get(recordNumber).getPax()));
     }
     
-//    
+    // Change Room Current State
     private void modifyRoom()
     {
         Room changedRoom = rooms.get(recordNumber);
         
         String oldStatus = rooms.get(recordNumber).getRoomStatus();
-        boolean oldMaintenance = rooms.get(recordNumber).getMaintenance();
+        boolean oldMaintenance = rooms.get(recordNumber).getMaintenance(); 
         int oldPax = rooms.get(recordNumber).getPax();
         
         String newStatus = (String) roomStatus.getModel().getSelectedItem();
-        System.out.println(newStatus);
-        boolean newMaintenance = yesRadioButton.isSelected() ? true : false;
+        boolean newMaintenance = yesRadioButton.isSelected();
         int newPax = 0;
         boolean proceedable = true;
         try
         {
             newPax = Integer.parseInt(roomPax.getText());
+            if(
+               newPax == 0 || newPax < 0
+            )
+            {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    "There are empty fields or Invalid Pax Number",
+                    "Error Update", 
+                    JOptionPane.ERROR_MESSAGE
+                );
+                proceedable = false;
+                setVisible(false);
+                setVisible(true);
+            }
         }
-        catch(Exception e)
+        catch(NumberFormatException e)
         {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(
                 null, 
                 "Pax is not valid number",
@@ -691,7 +689,7 @@ public class Rooms extends javax.swing.JFrame {
             setVisible(false);
             setVisible(true);
         }
-        
+
         if (proceedable)
         {
             if (oldStatus.equals(newStatus) 
@@ -822,7 +820,7 @@ public class Rooms extends javax.swing.JFrame {
     private javax.swing.JRadioButton yesRadioButton;
     // End of variables declaration//GEN-END:variables
 
-    
+    // Used to launch interface
     public void run()
     {
         new Rooms().setVisible(true);

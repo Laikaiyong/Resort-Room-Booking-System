@@ -31,6 +31,7 @@ public class Customer
      * @param newPersonalId
      * @param newGender
      * @param newEmail
+     * @param newContactNumber
     */
     public Customer(
             String newName, 

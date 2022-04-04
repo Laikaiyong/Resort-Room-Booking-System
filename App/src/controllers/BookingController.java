@@ -11,10 +11,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import model.Booking;
 
-/**
- *
- * @author USER
- */
 public class BookingController {
     public void updateBookingDatabase(ArrayList<Booking> list)
     {
@@ -36,6 +32,7 @@ public class BookingController {
                         record.getCustomer().getPersonalId(),
                         record.getCustomer().getGender(),
                         record.getCustomer().getEmail(),
+                        record.getCustomer().getContactNumber(),
                         record.getBookedRoom(),
                         record.getStatus(),
                         record.getStayDays(),

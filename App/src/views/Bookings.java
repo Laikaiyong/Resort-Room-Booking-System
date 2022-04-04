@@ -752,7 +752,7 @@ public class Bookings extends javax.swing.JFrame {
         requestBookingID.setText("-");
 
         jLabel39.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jLabel39.setText("Contact Number:");
+        jLabel39.setText("Ph No.");
 
         requestContactNumber.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         requestContactNumber.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1124,6 +1124,7 @@ public class Bookings extends javax.swing.JFrame {
             bookings = new BookingsConfig().bookings;
             String selectedBooking = bookingId.getText();
 
+            // Confirmation on Deletion
             if (
                     JOptionPane.showConfirmDialog
                     (
@@ -1134,6 +1135,7 @@ public class Bookings extends javax.swing.JFrame {
                     ) == JOptionPane.YES_OPTION
             )
             {
+                // Execute on confirmation
                 for(Booking record: bookings)
                 {
                     if(record.getBookingId().equals(selectedBooking))
@@ -1172,42 +1174,85 @@ public class Bookings extends javax.swing.JFrame {
         bookings = new BookingsConfig().bookings;
         if(validDate && updateButton.isEnabled())
         {
+            // Initialization + Value retrieval
+            boolean proceedable = true;
             String selectedBooking = bookingId.getText();
             char newGender = maleButton.isSelected() ? 'M' : 'F'; 
-            Customer newCustomer = new Customer();
-            for(Booking record: bookings)
+            String newCusName = customerName.getText().trim();
+            String newPersonalId = personalId.getText().trim();
+            String newEmail = email.getText().trim();
+            String newContactNumber = contactNumber.getText().trim();
+            
+            // Block process if there are empty field
+            if(
+                newCusName.isEmpty() ||
+                newPersonalId.isEmpty() ||
+                newEmail.isEmpty() ||
+                newContactNumber.isEmpty()
+            )
             {
-                if(record.getBookingId().equals(selectedBooking))
+                JOptionPane.showMessageDialog(
+                    null, 
+                    "There are empty field that are required to be filled", 
+                    "Error Update", 
+                    JOptionPane.ERROR_MESSAGE
+                );
+                proceedable = false;
+            }
+            else
+            {
+                // Block process for invalid email value
+                if(!EmailValidator.isValidEmail(newEmail))
                 {
-                    newCustomer.setName(customerName.getText().trim());
-                    newCustomer.setPersonalId(personalId.getText().trim());
-                    newCustomer.setGender(newGender);
-                    newCustomer.setEmail(email.getText().trim());
-                    newCustomer.setContactNumber(contactNumber.getText().trim());
-                    record.setCustomer(newCustomer);
-                    record.setRoom(roomIdCombo.getModel().getSelectedItem().toString());
-                    record.setStartDate(startDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                    record.setEndDate(endDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Email entered is in invalid format", 
+                        "Error Update", 
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                    proceedable = false;
                 }
             }
-            new BookingController().updateBookingDatabase(bookings);
-            ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
-            JOptionPane.showMessageDialog(
-                    null, 
-                    "Record Updated", 
-                    "Success Update", 
-                    JOptionPane.INFORMATION_MESSAGE, 
-                    successIcon
-            );
-            setVisible(false);
-            setVisible(true);
+            
+            // Execute after validation to update record
+            if(proceedable)
+            {
+                Customer newCustomer = new Customer();
+                for(Booking record: bookings)
+                {
+                    if(record.getBookingId().equals(selectedBooking))
+                    {
+                        newCustomer.setName(newCusName);
+                        newCustomer.setPersonalId(newPersonalId);
+                        newCustomer.setGender(newGender);
+                        newCustomer.setEmail(newEmail);
+                        newCustomer.setContactNumber(newContactNumber);
+                        record.setCustomer(newCustomer);
+                        record.setRoom(roomIdCombo.getModel().getSelectedItem().toString());
+                        record.setStartDate(startDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                        record.setEndDate(endDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                    }
+                }
+                new BookingController().updateBookingDatabase(bookings);
+                ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "Record Updated", 
+                        "Success Update", 
+                        JOptionPane.INFORMATION_MESSAGE, 
+                        successIcon
+                );
+                setVisible(false);
+                setVisible(true);
+            }
         }
+        // Date is not validated or record is not permitted to be edit
         else
         {
             System.out.println("Date is not validated");
             JOptionPane.showMessageDialog(
                     null, 
-                    "Please Validate Date", 
+                    "Please Validate Date or Record is unable to be updated (CheckOut)", 
                     "Error Update", 
                     JOptionPane.ERROR_MESSAGE
             );
@@ -1215,15 +1260,31 @@ public class Bookings extends javax.swing.JFrame {
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void requestSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestSearchButtonActionPerformed
+        // Initialization
         boolean proceedable = true;
-        
         LocalDate newStartDate = LocalDate.now();
         LocalDate newEndDate = LocalDate.now();
         try
         {
-            newStartDate = requestStartDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            try
+            {
+                newStartDate = requestStartDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             newEndDate = requestEndDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            }
+            // Empty date error handling
+            catch(NullPointerException e)
+            {
+                validNewDate = false;
+                JOptionPane.showMessageDialog(
+                    null, 
+                    "End date is not selected", 
+                    "Reservation error", 
+                    JOptionPane.ERROR_MESSAGE
+                );
+                proceedable = false;
+            }
             
+            // Date & Duration Validation
             LocalDate now = LocalDate.now();
             if(
                     (newStartDate.getMonthValue() - now.getMonthValue()) > 1
@@ -1452,6 +1513,7 @@ public class Bookings extends javax.swing.JFrame {
         
         try
         {
+            // Data Retrieval
             newId = requestBookingID.getText().trim();
             newStartDate = requestStartDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             newEndDate = requestEndDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -1461,30 +1523,44 @@ public class Bookings extends javax.swing.JFrame {
             newGender = (requestMaleButton.isSelected()) ? 'M' : 'F';
             newCusEmail = requestCustomerEmail.getText().trim();
             newContactNumber = requestContactNumber.getText().trim();
+            
+            // Empty field blockage
+            if(
+               newCusName.isEmpty() ||
+               newPersonalId.isEmpty() ||
+               newCusEmail.isEmpty() ||
+               newContactNumber.isEmpty()
+            )
+            {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    "There are empty field", 
+                    "Error Add Request", 
+                    JOptionPane.ERROR_MESSAGE
+                );
+                proceedable = false;
+            }
+            // Invalid Email format Blockage
+            else
+            {
+                if(!EmailValidator.isValidEmail(newCusEmail))
+                {
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Email is in invalid format", 
+                        "Invalid Email", 
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                    proceedable = false;
+                }
+            }
         }
-        catch(Exception e)
+        catch(HeadlessException e)
         {
-            JOptionPane.showMessageDialog(
-                null, 
-                "Value inserted are invalid or There are empty field", 
-                "Error Add Request", 
-                JOptionPane.ERROR_MESSAGE
-            );
-            proceedable = false;
+            System.err.println("Some Error Occured");
         }
         
-        
-        if(!EmailValidator.isValidEmail(newCusEmail))
-        {
-            JOptionPane.showMessageDialog(
-                null, 
-                "Email is in invalid format", 
-                "Invalid Email", 
-                JOptionPane.ERROR_MESSAGE
-            );
-            proceedable = false;
-        }
-        
+        // Execute the booking addition
         if(proceedable && validNewDate)
         {
             Customer newCustomer = new Customer(
@@ -1516,6 +1592,7 @@ public class Bookings extends javax.swing.JFrame {
             setVisible(false);
             setVisible(true);
         }
+        // Date is not being validated
         else
         {
             JOptionPane.showMessageDialog(
@@ -1615,7 +1692,8 @@ public class Bookings extends javax.swing.JFrame {
                 searchResult.add(record);
             }
         }
-                
+        
+        // No related information found
         if(searchResult.isEmpty())
         {
             JOptionPane.showMessageDialog(
