@@ -8,6 +8,7 @@ import controllers.RoomsUpdate;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Booking;
@@ -589,6 +590,14 @@ public class CheckIns extends javax.swing.JFrame {
                     confirmed = false;
                     setVisible(false);
                     setVisible(true);
+                    ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
+                    JOptionPane.showMessageDialog(
+                            null, 
+                            "Booking is checked in", 
+                            "Success", 
+                            JOptionPane.INFORMATION_MESSAGE, 
+                            successIcon
+                    );
                 }
                 else
                 {
@@ -617,38 +626,31 @@ public class CheckIns extends javax.swing.JFrame {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         DefaultTableModel tableModel =  (DefaultTableModel) bookingTable.getModel();
         tableModel.setRowCount(0);
-        availableCheckinBooking.removeAllItems();
-        try 
-        {         
-            for(Booking record : bookings)
-            {
-                if(record.getStatus().equals("CheckIn"))
-                {
-                    tableModel.addRow(
-                            new Object[]
-                            {
-                                record.getBookingId(),
-                                record.getCustomer().getName(),
-                                record.getCustomer().getPersonalId(),
-                                record.getCustomer().getGender(),
-                                record.getCustomer().getEmail(),
-                                record.getCustomer().getContactNumber(),
-                                record.getBookedRoom(),
-                                record.getStatus(),
-                                record.getStayDays(),
-                                record.getStartDate().toString(),
-                                record.getEndDate().toString(),
-                                record.getCreatedTime()
-                            }
-                    );
-                }
-            }
-        } 
-        catch(Exception e) 
+        availableCheckinBooking.removeAllItems();      
+        for(Booking record : bookings)
         {
-            e.printStackTrace();
+            if(record.getStatus().equals("CheckIn"))
+            {
+                tableModel.addRow(
+                        new Object[]
+                        {
+                            record.getBookingId(),
+                            record.getCustomer().getName(),
+                            record.getCustomer().getPersonalId(),
+                            record.getCustomer().getGender(),
+                            record.getCustomer().getEmail(),
+                            record.getCustomer().getContactNumber(),
+                            record.getBookedRoom(),
+                            record.getStatus(),
+                            record.getStayDays(),
+                            record.getStartDate().toString(),
+                            record.getEndDate().toString(),
+                            record.getCreatedTime()
+                        }
+                );
+            }
         }
-        
+
         manipulateForm("None");
         updateComboBox();
     }//GEN-LAST:event_formComponentShown

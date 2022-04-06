@@ -19,23 +19,19 @@ import model.Room;
  * @author USER
  */
 public class RoomsConfig {
+    // Initialization
     public ArrayList<Room> rooms = configRooms();
     
-    private static String[] VIEWS = {"Jungle", "River"};
-    private static int MAX_ROOM = 20;
-    private static int MAX_EACH = 10;
+    private static final String[] VIEWS = {"Jungle", "River"};
+    private static final int MAX_ROOM = 20;
+    private static final int MAX_EACH = 10;
     
-    public static void main(String[] args)
-    {
-        RoomsConfig initializer = new RoomsConfig();
-    }
-    
+    // Build Room file or Retrieve Room data
     private ArrayList<Room> configRooms()
     {
-        ArrayList<Room> rooms = new ArrayList<Room>(MAX_ROOM);
+        ArrayList<Room> initializeRooms = new ArrayList<>(MAX_ROOM);
         
         File file = new File("src/database/room.txt");
-        Path filePath = Path.of(file.getAbsolutePath());
         // Create file / Retrive data from file
         try 
         {
@@ -55,7 +51,7 @@ public class RoomsConfig {
                             false,
                             (roomIndex < 5) ? 2 : 4
                         );
-                        rooms.add(newRoom);
+                        initializeRooms.add(newRoom);
                         printWriter.append(
                                 String.format(
                                         "%s, %s, %s, %b, %d\n",
@@ -76,7 +72,7 @@ public class RoomsConfig {
                             false,
                             ((roomIndex - 10) < 5) ? 2 : 4
                         );
-                        rooms.add(newRoom);
+                        initializeRooms.add(newRoom);
                         if (roomIndex == MAX_ROOM - 1)
                         {
                             printWriter.append(
@@ -120,16 +116,15 @@ public class RoomsConfig {
                             Boolean.parseBoolean(roomInformation[3]),
                             Integer.parseInt(roomInformation[4])
                     );
-                    rooms.add(newRoom);
+                    initializeRooms.add(newRoom);
                 }
             }
         } 
         catch (IOException e)
         {
           System.out.println("An error occurred.");
-          e.printStackTrace();
         }
         
-        return rooms;
+        return initializeRooms;
     }
 }

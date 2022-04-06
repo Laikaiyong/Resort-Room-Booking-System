@@ -6,7 +6,6 @@ import controllers.RoomsUpdate;
 import java.awt.event.KeyEvent;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
@@ -716,9 +715,10 @@ public class Rooms extends javax.swing.JFrame {
         }
     }
     
+    // Search Result
     private void searchRoom()
     {
-        String searchKey = searchField.getText();
+        String searchKey = searchField.getText().trim();
         recordNumber = 0;
         boolean finishedForLoop = true;
         for (Room room: rooms)

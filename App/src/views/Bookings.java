@@ -987,6 +987,7 @@ public class Bookings extends javax.swing.JFrame {
     }//GEN-LAST:event_lastQueryActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // Load data to interface upon interface showing
         DefaultTableModel tableModel =  (DefaultTableModel) bookingTable.getModel();
         tableModel.setRowCount(0);
         try 
@@ -1269,7 +1270,7 @@ public class Bookings extends javax.swing.JFrame {
             try
             {
                 newStartDate = requestStartDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            newEndDate = requestEndDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                newEndDate = requestEndDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             }
             // Empty date error handling
             catch(NullPointerException e)
@@ -1561,46 +1562,49 @@ public class Bookings extends javax.swing.JFrame {
         }
         
         // Execute the booking addition
-        if(proceedable && validNewDate)
+        if(proceedable)
         {
-            Customer newCustomer = new Customer(
-                    newCusName, 
-                    newPersonalId, 
-                    newGender, 
-                    newCusEmail,
-                    newContactNumber
-            );
-            Booking newBookingRequest = new Booking(
-                newId,
-                newCustomer,
-                newRoomId,
-                "Booked",
-                newStartDate,
-                newEndDate,
-                LocalDateTime.now().format(datetimeFormatter),
-                0f,
-                false
-            );
-            bookings.add(newBookingRequest);
-            new BookingController().updateBookingDatabase(bookings);
-            ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
-            JOptionPane.showMessageDialog(null, 
-                                          "New Booking Record Added", 
-                                          "Success", 
-                                          JOptionPane.INFORMATION_MESSAGE, 
-                                          successIcon);
-            setVisible(false);
-            setVisible(true);
-        }
-        // Date is not being validated
-        else
-        {
-            JOptionPane.showMessageDialog(
-                null, 
-                "Date is not validated, please click search button", 
-                "Unvalidated date", 
-                JOptionPane.ERROR_MESSAGE
-            );  
+            if(validNewDate)
+            {
+                Customer newCustomer = new Customer(
+                        newCusName, 
+                        newPersonalId, 
+                        newGender, 
+                        newCusEmail,
+                        newContactNumber
+                );
+                Booking newBookingRequest = new Booking(
+                    newId,
+                    newCustomer,
+                    newRoomId,
+                    "Booked",
+                    newStartDate,
+                    newEndDate,
+                    LocalDateTime.now().format(datetimeFormatter),
+                    0f,
+                    false
+                );
+                bookings.add(newBookingRequest);
+                new BookingController().updateBookingDatabase(bookings);
+                ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
+                JOptionPane.showMessageDialog(null, 
+                                              "New Booking Record Added", 
+                                              "Success", 
+                                              JOptionPane.INFORMATION_MESSAGE, 
+                                              successIcon);
+                setVisible(false);
+                setVisible(true);
+            }
+            // Date is not being validated
+            else
+            {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    "Date is not validated, please click search button", 
+                    "Unvalidated date", 
+                    JOptionPane.ERROR_MESSAGE
+                );  
+            }
         }
     }
     

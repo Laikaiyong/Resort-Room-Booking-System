@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Booking;
@@ -691,6 +692,14 @@ public class CheckOuts extends javax.swing.JFrame {
                     confirmed = false;
                     setVisible(false);
                     setVisible(true);
+                    ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
+                    JOptionPane.showMessageDialog(
+                            null, 
+                            "Booking is checked out", 
+                            "Success", 
+                            JOptionPane.INFORMATION_MESSAGE, 
+                            successIcon
+                    );
                 }
                 else
                 {

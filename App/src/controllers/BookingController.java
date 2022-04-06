@@ -12,10 +12,12 @@ import java.util.ArrayList;
 import model.Booking;
 
 public class BookingController {
+    // Function Used to update database when there are any changes
     public void updateBookingDatabase(ArrayList<Booking> list)
     {
         System.out.println("Updating Bookimg database");
         File file = new File("src/database/records.txt");
+        // Try to write latest data to file
         try
         {
             System.out.println("Updating file");
@@ -26,7 +28,7 @@ public class BookingController {
             {
                 printWriter.append(
                     String.format(
-                        "%s, %s, %s, %c, %s, %s, %s, %d, %s, %s, %s, %f, %f, %f, %b\n",
+                        "%s, %s, %s, %c, %s, %s, %s, %s, %d, %s, %s, %s, %f, %f, %f, %b\n",
                         record.getBookingId(),
                         record.getCustomer().getName(),
                         record.getCustomer().getPersonalId(),
@@ -51,6 +53,7 @@ public class BookingController {
         }
         catch(IOException e)
         {
+            System.err.println("Unable to update record.txt (Booking Database)");
         };
     }
 }

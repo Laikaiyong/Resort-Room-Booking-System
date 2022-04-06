@@ -19,7 +19,6 @@ public class RoomsUpdate {
     public void updateRoomDatabase(ArrayList<Room> list)
     {
         File file = new File("src/database/room.txt");
-        Path filePath = Path.of(file.getAbsolutePath());
         try
         {
             System.out.println("Updating Room data");
