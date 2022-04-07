@@ -1223,6 +1223,34 @@ public class Bookings extends javax.swing.JFrame {
                 {
                     if(record.getBookingId().equals(selectedBooking))
                     {
+                        // Free old room and change new room to occupied
+                        if(
+                            record.getStatus().equals("CheckIn")
+                            && 
+                            !record.getBookedRoom().equals(
+                                roomIdCombo.getModel().getSelectedItem().toString()
+                            )
+                        )
+                        {
+                            for(Room room: rooms)
+                            {
+                                if(room.getRoomNumber().equals(record.getBookedRoom()))
+                                {
+                                    room.setStatus("Available");
+                                }
+                                else
+                                {
+                                    if(room.getRoomNumber().equals(
+                                        roomIdCombo.getModel().getSelectedItem().toString()
+                                    ))
+                                    {
+                                        room.setStatus("Occupied");
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // update list
                         newCustomer.setName(newCusName);
                         newCustomer.setPersonalId(newPersonalId);
                         newCustomer.setGender(newGender);
@@ -1234,6 +1262,7 @@ public class Bookings extends javax.swing.JFrame {
                         record.setEndDate(endDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                     }
                 }
+                new RoomsUpdate().updateRoomDatabase(rooms);
                 new BookingController().updateBookingDatabase(bookings);
                 ImageIcon successIcon = new ImageIcon("src/img/successSmall.png");
                 JOptionPane.showMessageDialog(
