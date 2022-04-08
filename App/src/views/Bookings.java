@@ -1473,6 +1473,7 @@ public class Bookings extends javax.swing.JFrame {
                     if(record.getBookingId().equals(selectedBookingId))
                     {
                         recordNumber = selectedRow;
+                        System.out.println(record);
                         manipulateForm(recordNumber);
                         break;
                     }

@@ -571,7 +571,7 @@ public class Rooms extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentShown
 
     private void firstQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstQueryActionPerformed
-        
+        manipulateForm(0);       
     }//GEN-LAST:event_firstQueryActionPerformed
 
     private void lastQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastQueryActionPerformed
@@ -608,6 +608,7 @@ public class Rooms extends javax.swing.JFrame {
                 if(record.getRoomNumber().equals(selectedRoomId))
                 {
                     recordNumber = selectedRow;
+                    System.out.println(record);
                     manipulateForm(recordNumber);
                     break;
                 }
